@@ -1,0 +1,5 @@
+we will add the rerequired libraries here
+fastapi
+uvicorn
+psycopg2-binary
+qdrant-client
