@@ -18,9 +18,9 @@
 - **Optional Dataset Fetcher:**  
   Go service to download NetCDF files automatically from FTP/HTTP sources.
 
----
 
-## 🏗 Repo Structure
+# 🏗 Repo Structure
+``````
 
 floatchat/
 │
@@ -33,54 +33,53 @@ floatchat/
 ├── .gitignore
 └── README.md
 
+``````
 
----
+# ⚙️ Setup & Installation
 
-## ⚙️ Setup & Installation
+## 1. Clone the repo
 
-### 1. Clone the repo
-```bash
-git clone https://github.com/<your-username>/floatchat.git
+git clone https://github.com/SyedOwais312/floatchat.git
 cd floatchat
 
-2. Setup Databases
+## 2. Setup Databases
 
 PostgreSQL: run infra/postgres_init.sql
 
 Qdrant: run infra/qdrant_setup.py (optional)
 
-3. Python Services
+## 3. Python Services
 
-Ingestion
+### Ingestion
 cd ingestion
 python -m venv venv
 venv\Scripts\activate   # Windows
 pip install -r requirements.txt
 python main.py
 
-API
+### API
 cd api
 python -m venv venv
 venv\Scripts\activate
 pip install -r requirements.txt
 uvicorn app:app --reload --host 0.0.0.0 --port 8000
 
-4. Frontend
+## 4. Frontend
 cd frontend
 npm install
 npm start
 
-5. Optional Go Fetcher
+## 5. Optional Go Fetcher
 cd go-fetcher
 go run main.go
 
-💡 Usage
+#💡 Usage
 
 Visit the frontend: http://localhost:3000
 
 API available at: http://localhost:8000/docs
 
-Ask queries like:
+### Ask queries like:
 
 “Show salinity profiles near the equator in March 2023”
 
