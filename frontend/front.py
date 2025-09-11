@@ -9,7 +9,7 @@ from datetime import datetime, timedelta
 # Page configuration
 st.set_page_config(
     page_title="ARGO - Planet Earth",
-    page_icon="🌍",
+    
     layout="wide",
     initial_sidebar_state="collapsed"
 )
@@ -36,7 +36,7 @@ st.markdown("""
     
     /* Full height background */
     .stApp {
-        background-image: url('https://argo.ucsd.edu/wp-content/uploads/sites/361/2020/10/Thomas-JessinLOV-768x563.png');
+        
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
@@ -219,23 +219,23 @@ st.markdown('<div class="navbar"><div class="logo">ARGO</div></div>', unsafe_all
 col1, col2, col3, col4, col5, col6 = st.columns([1, 2, 2, 2, 2, 1])
 
 with col2:
-    if st.button("🏠 Home", use_container_width=True):
+    if st.button(" Home", use_container_width=True):
         navigate_to('home')
 
 with col3:
-    if st.button("📊 ARGO Float Profile", use_container_width=True):
+    if st.button(" ARGO Float Profile", use_container_width=True):
         navigate_to('profile')
 
 with col4:
-    if st.button("🗺️ Map Trajectory", use_container_width=True):
+    if st.button(" Map Trajectory", use_container_width=True):
         navigate_to('map')
 
 with col5:
-    if st.button("📈 Profile Comparisons", use_container_width=True):
+    if st.button(" Profile Comparisons", use_container_width=True):
         navigate_to('comparison')
 
 with col6:
-    if st.button("⏰ Time Depth Plots", use_container_width=True):
+    if st.button(" Time Depth Plots", use_container_width=True):
         navigate_to('time_depth')
 
 # Page routing
@@ -254,7 +254,7 @@ if st.session_state.current_page == 'home':
 
 elif st.session_state.current_page == 'profile':
     st.markdown('<div class="page-content">', unsafe_allow_html=True)
-    st.title("🌊 ARGO Float Profile")
+    st.title("ARGO Float Profile")
     st.write("Here you can explore individual ARGO float profiles and their measurements.")
     
     # Load data for profile display
@@ -272,7 +272,7 @@ elif st.session_state.current_page == 'profile':
 
 elif st.session_state.current_page == 'map':
     st.markdown('<div class="page-content">', unsafe_allow_html=True)
-    st.title("🗺️ Map Trajectory")
+    st.title(" Map Trajectory")
     st.write("Visualize the trajectory of ARGO floats across the ocean.")
     
     df = load_data()
@@ -294,7 +294,7 @@ elif st.session_state.current_page == 'map':
 
 elif st.session_state.current_page == 'comparison':
     st.markdown('<div class="page-content">', unsafe_allow_html=True)
-    st.title("📈 Profile Comparisons")
+    st.title(" Profile Comparisons")
     st.write("Compare oceanographic properties between different time periods.")
     
     df = load_data()
@@ -399,7 +399,7 @@ elif st.session_state.current_page == 'comparison':
 
 elif st.session_state.current_page == 'time_depth':
     st.markdown('<div class="page-content">', unsafe_allow_html=True)
-    st.title("⏰ Time Depth Plots")
+    st.title(" Time Depth Plots")
     st.write("Analyze how properties vary with depth over time.")
     
     df = load_data()
