@@ -46,7 +46,7 @@ fig = px.imshow(
     heatmap_data.sort_index(ascending=False),
     labels=dict(x="Time", y="Depth(m)", color=parameter.capitalize()),
     aspect="auto",
-    color_continuous_scale= 'Turbo'
+    color_continuous_scale= 'Rainbow'
 
 )
 st.plotly_chart(fig, use_container_width=True)
