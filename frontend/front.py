@@ -114,6 +114,16 @@ st.markdown("""
         backdrop-filter: blur(10px);
     }
     
+    /* Sidebar styling for comparison page */
+    .comparison-sidebar {
+        background: rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        border-radius: 10px;
+        height: fit-content;
+        position: sticky;
+        top: 20px;
+    }
+    
     /* Responsive design */
     @media (max-width: 768px) {
         .navbar {
@@ -299,101 +309,108 @@ elif st.session_state.current_page == 'comparison':
     
     df = load_data()
     
-    # Year comparison selector
-    available_years = sorted(df['year'].unique())
+    # Create two columns: left for graphs (70%), right for controls (30%)
+    main_col, sidebar_col = st.columns([0.7, 0.3])
     
-    col1, col2 = st.columns(2)
-    with col1:
-        year1 = st.selectbox("Select First Year", available_years, index=0)
-    with col2:
-        year2 = st.selectbox("Select Second Year", available_years, index=1 if len(available_years) > 1 else 0)
+    with sidebar_col:
+        st.markdown('<div class="comparison-sidebar">', unsafe_allow_html=True)
+        st.subheader("Controls")
+        
+        # Year comparison selector
+        available_years = sorted(df['year'].unique())
+        
+        st.write("**Select Years to Compare:**")
+        year1 = st.selectbox("First Year", available_years, index=0, key="year1_select")
+        year2 = st.selectbox("Second Year", available_years, index=1 if len(available_years) > 1 else 0, key="year2_select")
+        
+        # Property selector
+        properties = ['salinity', 'temperature', 'air_temp', 'oxygen']
+        selected_property = st.selectbox("Choose Parameter", properties, key="property_select")
+        
+        st.markdown('</div>', unsafe_allow_html=True)
     
-    # Property selector
-    properties = ['salinity', 'temperature', 'air_temp', 'oxygen']
-    selected_property = st.selectbox("Select Property to Compare", properties)
-    
-    # Filter data by years
-    df_year1 = df[df['year'] == year1]
-    df_year2 = df[df['year'] == year2]
-    
-    # Create comparison plots
-    col1, col2 = st.columns(2)
-    
-    with col1:
-        st.subheader(f"{selected_property.title()} - {year1}")
-        fig1 = px.line(df_year1, 
-                      x='time', 
-                      y=selected_property,
-                      title=f"{selected_property.title()} over Time ({year1})",
-                      color_discrete_sequence=['blue'])
-        st.plotly_chart(fig1, use_container_width=True)
-    
-    with col2:
-        st.subheader(f"{selected_property.title()} - {year2}")
-        fig2 = px.line(df_year2, 
-                      x='time', 
-                      y=selected_property,
-                      title=f"{selected_property.title()} over Time ({year2})",
-                      color_discrete_sequence=['red'])
-        st.plotly_chart(fig2, use_container_width=True)
-    
-    # Combined comparison
-    st.subheader("Combined Comparison")
-    
-    # Prepare data for combined plot
-    df_year1_plot = df_year1.copy()
-    df_year1_plot['year_label'] = f'{year1}'
-    df_year2_plot = df_year2.copy()
-    df_year2_plot['year_label'] = f'{year2}'
-    
-    combined_df = pd.concat([df_year1_plot, df_year2_plot])
-    
-    fig_combined = px.line(combined_df, 
+    with main_col:
+        # Filter data by years
+        df_year1 = df[df['year'] == year1]
+        df_year2 = df[df['year'] == year2]
+        
+        # Combined comparison (main plot)
+        st.subheader(f"{selected_property.title()} Comparison: {year1} vs {year2}")
+        
+        # Prepare data for combined plot
+        df_year1_plot = df_year1.copy()
+        df_year1_plot['year_label'] = f'{year1}'
+        df_year2_plot = df_year2.copy()
+        df_year2_plot['year_label'] = f'{year2}'
+        
+        combined_df = pd.concat([df_year1_plot, df_year2_plot])
+        
+        fig_combined = px.line(combined_df, 
+                              x='time', 
+                              y=selected_property,
+                              color='year_label',
+                              title=f"{selected_property.title()} Time Series Comparison",
+                              color_discrete_map={f'{year1}': 'blue', f'{year2}': 'red'})
+        
+        st.plotly_chart(fig_combined, use_container_width=True)
+        
+        # Distribution comparison (Box plot)
+        st.subheader("Distribution Comparison")
+        fig_box = go.Figure()
+        
+        fig_box.add_trace(go.Box(y=df_year1[selected_property], 
+                                name=f'{year1}', 
+                                boxpoints='outliers',
+                                marker_color='blue'))
+        
+        fig_box.add_trace(go.Box(y=df_year2[selected_property], 
+                                name=f'{year2}', 
+                                boxpoints='outliers',
+                                marker_color='red'))
+        
+        fig_box.update_layout(title=f"{selected_property.title()} Distribution Comparison",
+                             yaxis_title=selected_property.title())
+        
+        st.plotly_chart(fig_box, use_container_width=True)
+        
+        # Individual year plots (side by side)
+        st.subheader("Individual Year Analysis")
+        year_col1, year_col2 = st.columns(2)
+        
+        with year_col1:
+            fig1 = px.line(df_year1, 
                           x='time', 
                           y=selected_property,
-                          color='year_label',
-                          title=f"{selected_property.title()} Comparison: {year1} vs {year2}",
-                          color_discrete_map={f'{year1}': 'blue', f'{year2}': 'red'})
-    
-    st.plotly_chart(fig_combined, use_container_width=True)
-    
-    # Statistics comparison
-    st.subheader("Statistical Comparison")
-    
-    stats_col1, stats_col2 = st.columns(2)
-    
-    with stats_col1:
-        st.write(f"**{year1} Statistics:**")
-        st.write(f"Mean: {df_year1[selected_property].mean():.2f}")
-        st.write(f"Std: {df_year1[selected_property].std():.2f}")
-        st.write(f"Min: {df_year1[selected_property].min():.2f}")
-        st.write(f"Max: {df_year1[selected_property].max():.2f}")
-    
-    with stats_col2:
-        st.write(f"**{year2} Statistics:**")
-        st.write(f"Mean: {df_year2[selected_property].mean():.2f}")
-        st.write(f"Std: {df_year2[selected_property].std():.2f}")
-        st.write(f"Min: {df_year2[selected_property].min():.2f}")
-        st.write(f"Max: {df_year2[selected_property].max():.2f}")
-    
-    # Box plot comparison
-    st.subheader("Distribution Comparison")
-    fig_box = go.Figure()
-    
-    fig_box.add_trace(go.Box(y=df_year1[selected_property], 
-                            name=f'{year1}', 
-                            boxpoints='outliers',
-                            marker_color='blue'))
-    
-    fig_box.add_trace(go.Box(y=df_year2[selected_property], 
-                            name=f'{year2}', 
-                            boxpoints='outliers',
-                            marker_color='red'))
-    
-    fig_box.update_layout(title=f"{selected_property.title()} Distribution Comparison",
-                         yaxis_title=selected_property.title())
-    
-    st.plotly_chart(fig_box, use_container_width=True)
+                          title=f"{selected_property.title()} - {year1}",
+                          color_discrete_sequence=['blue'])
+            st.plotly_chart(fig1, use_container_width=True)
+        
+        with year_col2:
+            fig2 = px.line(df_year2, 
+                          x='time', 
+                          y=selected_property,
+                          title=f"{selected_property.title()} - {year2}",
+                          color_discrete_sequence=['red'])
+            st.plotly_chart(fig2, use_container_width=True)
+        
+        # Statistics comparison
+        st.subheader("Statistical Summary")
+        
+        stats_col1, stats_col2 = st.columns(2)
+        
+        with stats_col1:
+            st.write(f"**{year1} Statistics:**")
+            st.write(f"Mean: {df_year1[selected_property].mean():.2f}")
+            st.write(f"Std: {df_year1[selected_property].std():.2f}")
+            st.write(f"Min: {df_year1[selected_property].min():.2f}")
+            st.write(f"Max: {df_year1[selected_property].max():.2f}")
+        
+        with stats_col2:
+            st.write(f"**{year2} Statistics:**")
+            st.write(f"Mean: {df_year2[selected_property].mean():.2f}")
+            st.write(f"Std: {df_year2[selected_property].std():.2f}")
+            st.write(f"Min: {df_year2[selected_property].min():.2f}")
+            st.write(f"Max: {df_year2[selected_property].max():.2f}")
     
     st.markdown('</div>', unsafe_allow_html=True)
 
