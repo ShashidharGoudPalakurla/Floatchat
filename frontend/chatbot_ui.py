@@ -12,7 +12,7 @@ if "messages" not in st.session_state:
 
 for msg in st.session_state.messages:
     if msg["role"] == "user":
-        st.chat_message("user").markdown(msg["content"])
+        st.chat_message("user", avatar="./pngwing.com.png").markdown(msg["content"])
     else:
         st.chat_message("assistant").markdown(msg["content"])
 
