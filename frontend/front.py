@@ -26,6 +26,7 @@ st.markdown("""
         padding-bottom: 0rem;
         padding-left: 1rem;
         padding-right: 1rem;
+        
     }
     
     .stApp {
@@ -35,6 +36,7 @@ st.markdown("""
         background-repeat: no-repeat;
         background-attachment: fixed;
         min-height: 100vh;
+        background-image: url("https://images.unsplash.com/photo-1604599340287-2042e85a3802?q=80&w=774&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
     }
     
     .navbar {
@@ -42,7 +44,7 @@ st.markdown("""
         justify-content: space-between;
         align-items: center;
         padding: 20px 40px;
-        background: rgba(0, 0, 0, 0.3);
+     
         backdrop-filter: blur(10px);
       
         margin-bottom: 20px;
@@ -61,6 +63,18 @@ st.markdown("""
         align-items: centre;
     }
     
+    div.stButton > button:first-child {
+        background: none;
+        color: white;
+        border-radius: 0px;
+        height: 50px;
+        width: 200px;
+        font-size: 18px;
+        font-weight: bold;
+        border:0px solid #2E8B57;
+        transition: 0.3s;
+    }
+
     .main-content {
         display: flex;
         flex-direction: column;
@@ -117,7 +131,7 @@ st.markdown("""
         .navbar {
             flex-direction: column;
             gap: 10px;
-            padding: 20px;
+            padding: ;
         }
         
         .earth-title {
@@ -203,9 +217,8 @@ def navigate_to(page):
     st.session_state.current_page = page
     st.rerun()
 
-st.markdown('<div class="navbar"><div class="logo">ARGO</div></div>', unsafe_allow_html=True)
 
-col1, col2, col3, col4, col5, col6 = st.columns([1, 2, 2, 2, 2, 1])
+col2, col3, col4, col5, col6 = st.columns([ 2, 2, 2, 2, 1])
 
 with col2:
     if st.button(" Home", use_container_width=True):
@@ -227,6 +240,8 @@ with col6:
     if st.button(" Time Depth Plots", use_container_width=True):
         navigate_to('time_depth')
 
+st.markdown('<div class="navbar"><div class="logo">FloatChat</div></div>', unsafe_allow_html=True)
+
 if st.session_state.current_page == 'home':
     st.markdown("""
     <div class="main-content">
@@ -240,7 +255,7 @@ if st.session_state.current_page == 'home':
     """, unsafe_allow_html=True)
 
 elif st.session_state.current_page == 'profile':
-    st.markdown('<div class="page-content">', unsafe_allow_html=True)
+   
     st.title("ARGO Float Profile")
     st.write("Here you can explore individual ARGO float profiles and their measurements.")
     
@@ -255,7 +270,6 @@ elif st.session_state.current_page == 'profile':
     st.markdown('</div>', unsafe_allow_html=True)
 
 elif st.session_state.current_page == 'map':
-    st.markdown('<div class="page-content">', unsafe_allow_html=True)
     st.title(" Map Trajectory")
     st.write("Visualize the trajectory of ARGO floats across the ocean.")
     
@@ -276,7 +290,7 @@ elif st.session_state.current_page == 'map':
     st.markdown('</div>', unsafe_allow_html=True)
 
 elif st.session_state.current_page == 'comparison':
-    st.markdown('<div class="page-content">', unsafe_allow_html=True)
+ 
     st.title(" Profile Comparisons")
     st.write("Compare oceanographic properties between different time periods.")
     
