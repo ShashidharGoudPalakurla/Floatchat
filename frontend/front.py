@@ -6,27 +6,21 @@ import plotly.graph_objects as go
 import sqlite3
 from datetime import datetime, timedelta
 
-# Page configuration
 st.set_page_config(
     page_title="ARGO - Planet Earth",
-    
     layout="wide",
     initial_sidebar_state="collapsed"
 )
 
-# Initialize session state for navigation
 if 'current_page' not in st.session_state:
     st.session_state.current_page = 'home'
 
-# Custom CSS for styling
 st.markdown("""
 <style>
-    /* Hide Streamlit default elements */
     #MainMenu {visibility: hidden;}
     footer {visibility: hidden;}
     header {visibility: hidden;}
     
-    /* Remove padding from main container */
     .block-container {
         padding-top: 0rem;
         padding-bottom: 0rem;
@@ -34,7 +28,6 @@ st.markdown("""
         padding-right: 1rem;
     }
     
-    /* Full height background */
     .stApp {
         
         background-size: cover;
@@ -44,7 +37,6 @@ st.markdown("""
         min-height: 100vh;
     }
     
-    /* Navigation bar styling */
     .navbar {
         display: flex;
         justify-content: space-between;
@@ -69,7 +61,6 @@ st.markdown("""
         align-items: centre;
     }
     
-    /* Main content styling for home page */
     .main-content {
         display: flex;
         flex-direction: column;
@@ -105,7 +96,6 @@ st.markdown("""
         opacity: 0.9;
     }
     
-    /* Page content styling */
     .page-content {
         background: rgba(255, 255, 255, 0.95);
         padding: 20px;
@@ -114,7 +104,6 @@ st.markdown("""
         backdrop-filter: blur(10px);
     }
     
-    /* Sidebar styling for comparison page */
     .comparison-sidebar {
         background: rgba(0, 0, 0, 0.1);
         padding: 20px;
@@ -124,7 +113,6 @@ st.markdown("""
         top: 20px;
     }
     
-    /* Responsive design */
     @media (max-width: 768px) {
         .navbar {
             flex-direction: column;
@@ -144,10 +132,9 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# Function to create dummy database and data
 @st.cache_resource
 def create_dummy_data():
-    """Create dummy database with sample data"""
+    
     conn = sqlite3.connect("dummy.db", check_same_thread=False)
     cursor = conn.cursor()
     
@@ -165,7 +152,6 @@ def create_dummy_data():
     )
     """)
     
-    # Check if data already exists
     cursor.execute("SELECT COUNT(*) FROM profiles")
     if cursor.fetchone()[0] == 0:
         np.random.seed(42)
@@ -173,7 +159,6 @@ def create_dummy_data():
         lat, lon = 12.9716, 77.5946 
         
         rows = []
-        # Generate data for 2024
         for i in range(100):  
             t = base_time + timedelta(days=i*3)
             depth = np.random.choice([0, 10, 20, 50, 100, 200]) 
@@ -185,7 +170,6 @@ def create_dummy_data():
             oxygen = 200 + np.random.rand() * 50  
             rows.append((t, depth, latitude, longitude, salinity, temperature, air_temp, oxygen))
         
-        # Generate data for 2025
         base_time_2025 = datetime(2025, 1, 1, 0, 0, 0)
         for i in range(100):  
             t = base_time_2025 + timedelta(days=i*3)
@@ -207,25 +191,20 @@ def create_dummy_data():
     
     return conn
 
-# Load data
 @st.cache_data
 def load_data():
-    """Load data from database"""
     conn = create_dummy_data()
     df = pd.read_sql_query("SELECT * FROM profiles", conn)
     df['time'] = pd.to_datetime(df['time'])
     df['year'] = df['time'].dt.year
     return df
 
-# Navigation functions
 def navigate_to(page):
     st.session_state.current_page = page
     st.rerun()
 
-# Navigation bar with Streamlit buttons
 st.markdown('<div class="navbar"><div class="logo">ARGO</div></div>', unsafe_allow_html=True)
 
-# Navigation buttons
 col1, col2, col3, col4, col5, col6 = st.columns([1, 2, 2, 2, 2, 1])
 
 with col2:
@@ -248,9 +227,7 @@ with col6:
     if st.button(" Time Depth Plots", use_container_width=True):
         navigate_to('time_depth')
 
-# Page routing
 if st.session_state.current_page == 'home':
-    # Home page content
     st.markdown("""
     <div class="main-content">
         <div class="planet-title">PLANET</div>
@@ -267,14 +244,11 @@ elif st.session_state.current_page == 'profile':
     st.title("ARGO Float Profile")
     st.write("Here you can explore individual ARGO float profiles and their measurements.")
     
-    # Load data for profile display
     df = load_data()
     
-    # Sample profile data
     st.subheader("Sample Profile Data")
     st.dataframe(df.head(10))
     
-    # Basic statistics
     st.subheader("Data Summary")
     st.write(df.describe())
     
@@ -287,7 +261,6 @@ elif st.session_state.current_page == 'map':
     
     df = load_data()
     
-    # Create map
     fig = px.scatter_mapbox(df, 
                            lat="latitude", 
                            lon="longitude",
@@ -309,35 +282,29 @@ elif st.session_state.current_page == 'comparison':
     
     df = load_data()
     
-    # Create two columns: left for graphs (70%), right for controls (30%)
     main_col, sidebar_col = st.columns([0.7, 0.3])
     
     with sidebar_col:
         st.markdown('<div class="comparison-sidebar">', unsafe_allow_html=True)
         st.subheader("Controls")
         
-        # Year comparison selector
         available_years = sorted(df['year'].unique())
         
         st.write("**Select Years to Compare:**")
         year1 = st.selectbox("First Year", available_years, index=0, key="year1_select")
         year2 = st.selectbox("Second Year", available_years, index=1 if len(available_years) > 1 else 0, key="year2_select")
         
-        # Property selector
         properties = ['salinity', 'temperature', 'air_temp', 'oxygen']
         selected_property = st.selectbox("Choose Parameter", properties, key="property_select")
         
         st.markdown('</div>', unsafe_allow_html=True)
     
     with main_col:
-        # Filter data by years
         df_year1 = df[df['year'] == year1]
         df_year2 = df[df['year'] == year2]
         
-        # Combined comparison (main plot)
         st.subheader(f"{selected_property.title()} Comparison: {year1} vs {year2}")
         
-        # Prepare data for combined plot
         df_year1_plot = df_year1.copy()
         df_year1_plot['year_label'] = f'{year1}'
         df_year2_plot = df_year2.copy()
@@ -354,7 +321,6 @@ elif st.session_state.current_page == 'comparison':
         
         st.plotly_chart(fig_combined, use_container_width=True)
         
-        # Distribution comparison (Box plot)
         st.subheader("Distribution Comparison")
         fig_box = go.Figure()
         
@@ -373,7 +339,6 @@ elif st.session_state.current_page == 'comparison':
         
         st.plotly_chart(fig_box, use_container_width=True)
         
-        # Individual year plots (side by side)
         st.subheader("Individual Year Analysis")
         year_col1, year_col2 = st.columns(2)
         
@@ -393,7 +358,6 @@ elif st.session_state.current_page == 'comparison':
                           color_discrete_sequence=['red'])
             st.plotly_chart(fig2, use_container_width=True)
         
-        # Statistics comparison
         st.subheader("Statistical Summary")
         
         stats_col1, stats_col2 = st.columns(2)
@@ -421,11 +385,9 @@ elif st.session_state.current_page == 'time_depth':
     
     df = load_data()
     
-    # Property selector
     properties = ['salinity', 'temperature', 'air_temp', 'oxygen']
     selected_property = st.selectbox("Select Property", properties, key="time_depth_property")
     
-    # Create time-depth plot
     fig = px.scatter(df, 
                     x='time', 
                     y='depth', 
@@ -433,13 +395,11 @@ elif st.session_state.current_page == 'time_depth':
                     title=f"{selected_property.title()} vs Time and Depth",
                     color_continuous_scale='viridis')
     
-    fig.update_yaxis(autorange='reversed')  # Invert y-axis so depth increases downward
+    fig.update_yaxis(autorange='reversed')  
     st.plotly_chart(fig, use_container_width=True)
     
-    # Depth profile for selected time range
     st.subheader("Depth Profile Analysis")
     
-    # Time range selector
     min_date = df['time'].min().date()
     max_date = df['time'].max().date()
     
@@ -452,7 +412,6 @@ elif st.session_state.current_page == 'time_depth':
         start_date, end_date = date_range
         filtered_df = df[(df['time'].dt.date >= start_date) & (df['time'].dt.date <= end_date)]
         
-        # Average by depth
         depth_avg = filtered_df.groupby('depth')[selected_property].mean().reset_index()
         
         fig_depth = px.line(depth_avg, 
@@ -465,5 +424,4 @@ elif st.session_state.current_page == 'time_depth':
     
     st.markdown('</div>', unsafe_allow_html=True)
 
-# Add some spacing at the bottom
 st.markdown("<div style='height: 50px;'></div>", unsafe_allow_html=True)
