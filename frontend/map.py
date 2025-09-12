@@ -6,9 +6,7 @@ from geopy.distance import geodesic
 import plotly.express as px
 import plotly.graph_objects as go
 
-# --------------------------
-# 1. Generate Dummy ARGO Data (2020–2025)
-# --------------------------
+
 np.random.seed(42)
 n_floats = 5
 n_points = 50
@@ -33,9 +31,7 @@ for float_id in range(n_floats):
 df = pd.DataFrame(rows, columns=["float_id", "time", "latitude", "longitude", "depth", "temperature", "salinity", "oxygen"])
 df.sort_values(by=["float_id", "time"], inplace=True)
 
-# --------------------------
-# Calculate cumulative distance per float
-# --------------------------
+
 def compute_cumulative_distance(df):
     df = df.copy()
     df["cumulative_distance_km"] = 0.0
@@ -51,9 +47,7 @@ def compute_cumulative_distance(df):
 
 df = compute_cumulative_distance(df)
 
-# --------------------------
-# 2. Layout Setup
-# --------------------------
+
 st.set_page_config(page_title="ARGO Dashboard", layout="wide")
 st.title("🌊 ARGO Dashboard")
 
@@ -122,9 +116,7 @@ with right:
 
 with left:
     if not filtered_df.empty:
-        # --------------------------
-        # Clean Ocean Map with Distance
-        # --------------------------
+      
         st.subheader("ARGO Float Trajectories on Ocean Map")
         fig_map = go.Figure()
         color_list = px.colors.qualitative.Set1  # Distinct colors per float
@@ -165,9 +157,6 @@ with left:
 
         st.plotly_chart(fig_map, use_container_width=True)
 
-        # --------------------------
-        # Custom Scatter Plot
-        # --------------------------
         st.subheader("Custom Scatter Plot")
         fig_scatter = px.scatter(
             filtered_df,
@@ -183,9 +172,7 @@ with left:
             fig_scatter.update_xaxes(autorange="reversed")
         st.plotly_chart(fig_scatter, use_container_width=True)
 
-        # --------------------------
-        # Raw Data
-        # --------------------------
+       
         with st.expander("📄 Show Raw Data"):
             st.dataframe(filtered_df)
 
