@@ -281,13 +281,18 @@ elif st.session_state.current_page == 'comparison':
         st.subheader("Controls")
         
         available_years = sorted(df['year'].unique())
+
         
         st.write("**Select Time range to Compare:**")
-        year1 = st.selectbox("From", available_years, index=0, key="year1_select")
-        year2 = st.selectbox("To", available_years, index=1 if len(available_years) > 1 else 0, key="year2_select")
-        
         properties = ['salinity', 'temperature', 'air_temp', 'oxygen']
         selected_property = st.selectbox("Choose Profile", properties, key="property_select")
+        col_from, col_to = st.columns(2)
+    with col_from:    
+        year1 = st.selectbox("From", available_years, index=0, key="year1_select")
+    with col_to:    
+        year2 = st.selectbox("To", available_years, index=1 if len(available_years) > 1 else 0, key="year2_select")
+        
+        
         
         st.markdown('</div>', unsafe_allow_html=True)
     
