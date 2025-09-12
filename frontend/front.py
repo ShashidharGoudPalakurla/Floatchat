@@ -6,6 +6,7 @@ import plotly.graph_objects as go
 import sqlite3
 from datetime import datetime, timedelta
 from timedepthplot import show_time_depth_plot
+from map_page import show_map
 st.set_page_config(
     page_title="ARGO-FloatChat",
     layout="wide",
@@ -251,24 +252,20 @@ elif st.session_state.current_page == 'profile':
     st.markdown('</div>', unsafe_allow_html=True)
 
 elif st.session_state.current_page == 'map':
-    st.title(" Map Trajectory")
+    st.markdown('<div class="page-content">', unsafe_allow_html=True)
+
+    st.title("Map Trajectory")
     st.write("Visualize the trajectory of ARGO floats across the ocean.")
-    
-    df = load_data()
-    
-    fig = px.scatter_mapbox(df, 
-                           lat="latitude", 
-                           lon="longitude",
-                           color="temperature",
-                           size="depth",
-                           hover_data=["salinity", "oxygen"],
-                           mapbox_style="open-street-map",
-                           zoom=8,
-                           height=600,
-                           title="ARGO Float Locations")
-    
-    st.plotly_chart(fig, use_container_width=True)
+
+    show_map()   # renamed function
+
     st.markdown('</div>', unsafe_allow_html=True)
+
+    
+    
+    
+    
+    
 
 elif st.session_state.current_page == 'comparison':
  
