@@ -5,7 +5,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 import sqlite3
 from datetime import datetime, timedelta
-
+from timedepthplot import show_time_depth_plot
 st.set_page_config(
     page_title="ARGO - Planet Earth",
     layout="wide",
@@ -394,48 +394,7 @@ elif st.session_state.current_page == 'comparison':
 
 elif st.session_state.current_page == 'time_depth':
     st.markdown('<div class="page-content">', unsafe_allow_html=True)
-    st.title(" Time Depth Plots")
-    st.write("Analyze how properties vary with depth over time.")
-    
-    df = load_data()
-    
-    properties = ['salinity', 'temperature', 'air_temp', 'oxygen']
-    selected_property = st.selectbox("Select Property", properties, key="time_depth_property")
-    
-    fig = px.scatter(df, 
-                    x='time', 
-                    y='depth', 
-                    color=selected_property,
-                    title=f"{selected_property.title()} vs Time and Depth",
-                    color_continuous_scale='viridis')
-    
-    fig.update_yaxis(autorange='reversed')  
-    st.plotly_chart(fig, use_container_width=True)
-    
-    st.subheader("Depth Profile Analysis")
-    
-    min_date = df['time'].min().date()
-    max_date = df['time'].max().date()
-    
-    date_range = st.date_input("Select Date Range", 
-                              value=(min_date, max_date),
-                              min_value=min_date,
-                              max_value=max_date)
-    
-    if len(date_range) == 2:
-        start_date, end_date = date_range
-        filtered_df = df[(df['time'].dt.date >= start_date) & (df['time'].dt.date <= end_date)]
-        
-        depth_avg = filtered_df.groupby('depth')[selected_property].mean().reset_index()
-        
-        fig_depth = px.line(depth_avg, 
-                           x=selected_property, 
-                           y='depth',
-                           title=f"Average {selected_property.title()} by Depth")
-        
-        fig_depth.update_yaxis(autorange='reversed')
-        st.plotly_chart(fig_depth, use_container_width=True)
-    
+    show_time_depth_plot()
     st.markdown('</div>', unsafe_allow_html=True)
 
 st.markdown("<div style='height: 50px;'></div>", unsafe_allow_html=True)
