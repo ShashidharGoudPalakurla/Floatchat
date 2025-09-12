@@ -7,7 +7,7 @@ import sqlite3
 from datetime import datetime, timedelta
 from timedepthplot import show_time_depth_plot
 st.set_page_config(
-    page_title="ARGO - Planet Earth",
+    page_title="ARGO-FloatChat",
     layout="wide",
     initial_sidebar_state="collapsed"
 )
@@ -26,6 +26,7 @@ st.markdown("""
         padding-bottom: 0rem;
         padding-left: 1rem;
         padding-right: 1rem;
+        margin: 40px;
         
     }
     
@@ -44,7 +45,7 @@ st.markdown("""
         justify-content: space-between;
         align-items: center;
         padding: 20px 40px;
-     
+        margin-top: 90px;
         backdrop-filter: blur(10px);
       
         margin-bottom: 20px;
@@ -86,19 +87,12 @@ st.markdown("""
         padding: 0 20px;
     }
     
-    .planet-title {
-        font-size: 16px;
-        font-weight: 300;
-        letter-spacing: 4px;
-        margin-bottom: 20px;
-        opacity: 0.8;
-    }
-    
-    .earth-title {
+   
+     .earth-title {
         font-size: 80px;
         font-weight: 300;
         letter-spacing: 8px;
-        margin-bottom: 40px;
+        margin-bottom:0px;
         text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
     }
     
@@ -106,7 +100,7 @@ st.markdown("""
         max-width: 600px;
         font-size: 16px;
         line-height: 1.6;
-        margin-bottom: 40px;
+        margin-top: 100px;
         opacity: 0.9;
     }
     
@@ -218,7 +212,7 @@ def navigate_to(page):
     st.rerun()
 
 
-col2, col3, col4, col5, col6 = st.columns([ 2, 2, 2, 2, 1])
+col2, col3, col4, col5, col6 = st.columns([ 2, 2, 2, 2, 2])
 
 with col2:
     if st.button(" Home", use_container_width=True):
@@ -240,13 +234,13 @@ with col6:
     if st.button(" Time Depth Plots", use_container_width=True):
         navigate_to('time_depth')
 
-st.markdown('<div class="navbar"><div class="logo">FloatChat</div></div>', unsafe_allow_html=True)
+
 
 if st.session_state.current_page == 'home':
     st.markdown("""
     <div class="main-content">
-        <div class="planet-title">PLANET</div>
-        <div class="earth-title">EARTH</div>
+        <div class="earth-title">ARGO</div>
+        <div class="earth-title">FloatChat</div>
         <div class="description">
             Learn more about this fascinating miracle that we call our home, Planet Earth. 
             Explore ARGO float data, analyze ocean profiles, and discover the secrets of our oceans.
