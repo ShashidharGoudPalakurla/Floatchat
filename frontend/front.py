@@ -104,22 +104,9 @@ st.markdown("""
         opacity: 0.9;
     }
     
-    .page-content {
-        background: rgba(255, 255, 255, 0.95);
-        padding: 20px;
-        border-radius: 10px;
-        margin: 20px;
-        backdrop-filter: blur(10px);
-    }
     
-    .comparison-sidebar {
-        background: rgba(0, 0, 0, 0.1);
-        padding: 20px;
-        border-radius: 10px;
-        height: fit-content;
-        position: sticky;
-        top: 20px;
-    }
+    
+    
     
     @media (max-width: 768px) {
         .navbar {
@@ -227,11 +214,11 @@ with col4:
         navigate_to('map')
 
 with col5:
-    if st.button(" Profile Comparisons", use_container_width=True):
+    if st.button(" Profile Comparison", use_container_width=True):
         navigate_to('comparison')
 
 with col6:
-    if st.button(" Time Depth Plots", use_container_width=True):
+    if st.button(" Depth-Time Plot", use_container_width=True):
         navigate_to('time_depth')
 
 
@@ -285,8 +272,8 @@ elif st.session_state.current_page == 'map':
 
 elif st.session_state.current_page == 'comparison':
  
-    st.title(" Profile Comparisons")
-    st.write("Compare oceanographic properties between different time periods.")
+    st.title(" Profile Comparison")
+    
     
     df = load_data()
     
@@ -298,12 +285,12 @@ elif st.session_state.current_page == 'comparison':
         
         available_years = sorted(df['year'].unique())
         
-        st.write("**Select Years to Compare:**")
-        year1 = st.selectbox("First Year", available_years, index=0, key="year1_select")
-        year2 = st.selectbox("Second Year", available_years, index=1 if len(available_years) > 1 else 0, key="year2_select")
+        st.write("**Select Time range to Compare:**")
+        year1 = st.selectbox("From", available_years, index=0, key="year1_select")
+        year2 = st.selectbox("To", available_years, index=1 if len(available_years) > 1 else 0, key="year2_select")
         
         properties = ['salinity', 'temperature', 'air_temp', 'oxygen']
-        selected_property = st.selectbox("Choose Parameter", properties, key="property_select")
+        selected_property = st.selectbox("Choose Profile", properties, key="property_select")
         
         st.markdown('</div>', unsafe_allow_html=True)
     
@@ -347,7 +334,7 @@ elif st.session_state.current_page == 'comparison':
         
         st.plotly_chart(fig_box, use_container_width=True)
         
-        st.subheader("Individual Year Analysis")
+        st.subheader("Individual Analysis")
         year_col1, year_col2 = st.columns(2)
         
         with year_col1:
@@ -373,14 +360,14 @@ elif st.session_state.current_page == 'comparison':
         with stats_col1:
             st.write(f"**{year1} Statistics:**")
             st.write(f"Mean: {df_year1[selected_property].mean():.2f}")
-            st.write(f"Std: {df_year1[selected_property].std():.2f}")
+            st.write(f"Standard deviation: {df_year1[selected_property].std():.2f}")
             st.write(f"Min: {df_year1[selected_property].min():.2f}")
             st.write(f"Max: {df_year1[selected_property].max():.2f}")
         
         with stats_col2:
             st.write(f"**{year2} Statistics:**")
             st.write(f"Mean: {df_year2[selected_property].mean():.2f}")
-            st.write(f"Std: {df_year2[selected_property].std():.2f}")
+            st.write(f"Standard deviation: {df_year2[selected_property].std():.2f}")
             st.write(f"Min: {df_year2[selected_property].min():.2f}")
             st.write(f"Max: {df_year2[selected_property].max():.2f}")
     
