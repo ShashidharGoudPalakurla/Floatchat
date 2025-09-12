@@ -3,10 +3,9 @@ import xarray as xr
 import pandas as pd
 import psycopg2
 from psycopg2.extras import execute_batch
+from sentence_transformers import SentenceTransformer
 
-# CONFIG
-DATA_DIR ="./data"  # folder with NetCDF files
-BULK_SIZE = 1000      # rows per batch insert
+
 DB_CONFIG = {
     "host": "localhost",
     "database": "floatchatai",
@@ -14,50 +13,56 @@ DB_CONFIG = {
     "password": "Owais@786"
 }
 
-def load_netcdf_to_df(file_path):
+DATA_DIR = "./data"
+
+
+model = SentenceTransformer('all-MiniLM-L6-v2')  # 384-d embeddings
+
+def get_embedding(text):
+    return model.encode(text).tolist()  # store as FLOAT8[]
+
+
+def ingest_nc_file(file_path, conn):
     ds = xr.open_dataset(file_path)
-    rows = []
 
     for prof in range(ds.sizes["N_PROF"]):
-        for level in range(ds.sizes["N_LEVELS"]):
-            row = {
-                "N_PROF": int(prof),
-                "N_LEVELS": int(level),
-                "JULD": pd.to_datetime(ds['JULD'][prof].values).to_pydatetime(),
-                "LATITUDE": float(ds['LATITUDE'][prof].values),
-                "LONGITUDE": float(ds['LONGITUDE'][prof].values),
-                "PRES": float(ds['PRES'][prof, level].values),
-                "TEMP": float(ds['TEMP'][prof, level].values),
-                "PSAL": float(ds['PSAL'][prof, level].values)
-            }
-            rows.append(row)
-            print("Data inserted -> 1 row")
-    
-    df = pd.DataFrame(rows)
-    return df
+        juld = pd.to_datetime(ds['JULD'][prof].values).to_pydatetime()
+        lat = float(ds['LATITUDE'][prof].values)
+        lon = float(ds['LONGITUDE'][prof].values)
 
-def insert_to_postgres(df, conn):
-    sql = """
-        INSERT INTO profiles (N_PROF, N_LEVELS, JULD, LATITUDE, LONGITUDE, PRES, TEMP, PSAL)
-        VALUES (%(N_PROF)s, %(N_LEVELS)s, %(JULD)s, %(LATITUDE)s, %(LONGITUDE)s, %(PRES)s, %(TEMP)s, %(PSAL)s)
-    """
-    with conn.cursor() as cur:
-        execute_batch(cur, sql, df.to_dict('records'), page_size=BULK_SIZE)
-    conn.commit()
-    print("Data inserted successfully!")
+        # Create profile embedding
+        desc = f"Ocean profile at lat {lat}, lon {lon}, date {juld.strftime('%Y-%m-%d')}"
+        emb = get_embedding(desc)
 
-def process_all():
+        # Insert profile
+        with conn.cursor() as cur:
+            cur.execute("""
+                INSERT INTO profiles (N_PROF, JULD, LATITUDE, LONGITUDE, embedding)
+                VALUES (%s, %s, %s, %s, %s) RETURNING id
+            """, (prof, juld, lat, lon, emb))
+            profile_id = cur.fetchone()[0]
+
+        # Insert depth-level rows
+        level_rows = [
+            (profile_id, int(level), float(ds['PRES'][prof, level].values),
+             float(ds['TEMP'][prof, level].values), float(ds['PSAL'][prof, level].values))
+            for level in range(ds.sizes["N_LEVELS"])
+        ]
+        with conn.cursor() as cur:
+            execute_batch(cur, """
+                INSERT INTO profile_levels (profile_id, N_LEVELS, PRES, TEMP, PSAL)
+                VALUES (%s, %s, %s, %s, %s)
+            """, level_rows, page_size=500)
+
+        conn.commit()
+        print(f"Inserted profile {prof} with {len(level_rows)} levels")
+
+def process_all_files():
     conn = psycopg2.connect(**DB_CONFIG)
-    
     for file in os.listdir(DATA_DIR):
         if file.endswith(".nc"):
-            file_path = os.path.join(DATA_DIR, file)
-            print(f"Processing {file_path}...")
-            df = load_netcdf_to_df(file_path)
-            print(f"Data shape: {df.shape}")
-            insert_to_postgres(df, conn)
-    
+            ingest_nc_file(os.path.join(DATA_DIR, file), conn)
     conn.close()
 
 if __name__ == "__main__":
-    process_all()
+    process_all_files()
