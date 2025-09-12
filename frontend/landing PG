@@ -1,0 +1,50 @@
+import sqlite3
+import pandas as pd
+import numpy as np
+from datetime import datetime, timedelta
+
+conn=sqlite3.connect("dummy.db")
+cursor = conn.cursor()
+
+cursor.execute("""
+CREATE TABLE IF NOT EXISTS profiles (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    time TIMESTAMP,
+    depth REAL,
+    latitude REAL,
+    longitude REAL,
+    salinity REAL,
+    temperature REAL,
+    air_temp REAL,
+    oxygen REAL
+)
+""")
+
+np.random.seed(42)
+base_time = datetime(2025, 1, 1, 0, 0, 0)
+lat, lon = 12.9716, 77.5946 
+
+rows = []
+for i in range(200):  
+    t = base_time + timedelta(hours=i)
+    depth = np.random.choice([0, 10, 20, 50, 100, 200]) 
+    latitude = lat + np.random.randn() * 0.1
+    longitude = lon + np.random.randn() * 0.1
+    salinity = 34 + np.random.rand() * 2  
+    temperature = 15 + np.random.rand() * 10  
+    air_temp = 20 + np.random.rand() * 5   
+    oxygen = 200 + np.random.rand() * 50  
+    rows.append((t, depth, latitude, longitude, salinity, temperature, air_temp, oxygen))
+
+cursor.executemany("""
+INSERT INTO profiles (time, depth, latitude, longitude, salinity, temperature, air_temp, oxygen)
+VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+""", rows)
+
+conn.commit()
+conn.close()
+
+
+
+
+             
