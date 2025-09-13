@@ -7,7 +7,6 @@ from geopy.distance import distance
 import re
 import json
 
-# ---------------- CONFIG ----------------
 DB_CONFIG = {
     "host": "localhost",
     "database": "floatchatai",
@@ -18,11 +17,8 @@ DB_CONFIG = {
 TOP_K = 3
 RADIUS_METERS = 50_000
 
-# ✅ load model locally if you downloaded it
-# model = SentenceTransformer(r"C:\path\to\your\local\all-MiniLM-L6-v2")
 model = SentenceTransformer("all-MiniLM-L6-v2")
 
-# ---------------- HELPERS ----------------
 def get_embedding(text):
     return model.encode(text).tolist()
 
@@ -78,7 +74,6 @@ def query_profiles(user_query):
 
         sims.append((combined_score, profile_id, plat, plon, juld))
 
-    # sort by score instead of id
     top_profiles = sorted(sims, key=lambda x: x[0], reverse=True)[:TOP_K]
 
     results = []
