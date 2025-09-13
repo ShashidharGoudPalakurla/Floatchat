@@ -7,6 +7,7 @@ import sqlite3
 from datetime import datetime, timedelta
 from timedepthplot import show_time_depth_plot
 from map_page import show_map
+from chatbot_ui import show_chatbot_ui
 st.set_page_config(
     page_title="ARGO-FloatChat",
     layout="wide",
@@ -48,7 +49,7 @@ st.markdown("""
         padding: 20px 40px;
         margin-top: 90px;
         backdrop-filter: blur(10px);
-      
+        font-size:70px;
         margin-bottom: 20px;
     }
     
@@ -63,6 +64,7 @@ st.markdown("""
         display: flex;
         gap: 10px;
         align-items: centre;
+        font-size:px;
     }
     
     div.stButton > button:first-child {
@@ -71,7 +73,7 @@ st.markdown("""
         border-radius: 0px;
         height: 50px;
         width: 200px;
-        font-size: 18px;
+        font-size: 1000px;
         font-weight: bold;
         border:0px solid #2E8B57;
         transition: 0.3s;
@@ -114,6 +116,7 @@ st.markdown("""
             flex-direction: column;
             gap: 10px;
             padding: ;
+            font-size:70px;
         }
         
         .earth-title {
@@ -207,8 +210,8 @@ with col2:
         navigate_to('home')
 
 with col3:
-    if st.button(" ARGO Float Profile", use_container_width=True):
-        navigate_to('profile')
+    if st.button(" FloatChat", use_container_width=True):
+        navigate_to('chatbot')
 
 with col4:
     if st.button(" Map Trajectory", use_container_width=True):
@@ -236,18 +239,12 @@ if st.session_state.current_page == 'home':
     </div>
     """, unsafe_allow_html=True)
 
-elif st.session_state.current_page == 'profile':
+elif st.session_state.current_page == 'chatbot':
    
-    st.title("ARGO Float Profile")
-    st.write("Here you can explore individual ARGO float profiles and their measurements.")
+
+   
     
-    df = load_data()
-    
-    st.subheader("Sample Profile Data")
-    st.dataframe(df.head(10))
-    
-    st.subheader("Data Summary")
-    st.write(df.describe())
+    show_chatbot_ui()
     
     st.markdown('</div>', unsafe_allow_html=True)
 
@@ -255,16 +252,22 @@ elif st.session_state.current_page == 'map':
     st.markdown('<div class="page-content">', unsafe_allow_html=True)
 
     st.title("Map Trajectory")
-    st.write("Visualize the trajectory of ARGO floats across the ocean.")
+    st.markdown('<div class="page-content">', unsafe_allow_html=True)
 
+    
+
+<<<<<<< HEAD
     show_map()  
     st.markdown('</div>', unsafe_allow_html=True)
+=======
+    show_map()   # renamed function
+
+>>>>>>> 7da6609286093c30800976141096e70ca0cb5c82
 
     
-    
-    
-    
-    
+
+    st.markdown('</div>', unsafe_allow_html=True)
+
 
 elif st.session_state.current_page == 'comparison':
  
