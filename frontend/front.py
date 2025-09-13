@@ -8,15 +8,12 @@ from datetime import datetime, timedelta
 from timedepthplot import show_time_depth_plot
 from map_page import show_map
 from chatbot_ui import show_chatbot_ui
-st.set_page_config(
+def show_front_page():
+    st.set_page_config(
     page_title="ARGO-FloatChat",
     layout="wide",
     initial_sidebar_state="collapsed"
 )
-
-if 'current_page' not in st.session_state:
-    st.session_state.current_page = 'home'
-
 st.markdown("""
 <style>
     #MainMenu {visibility: hidden;}
@@ -27,13 +24,10 @@ st.markdown("""
         padding-top: 0rem;
         padding-bottom: 0rem;
         padding-left: 1rem;
-        padding-right: 1rem;
-        margin: 40px;
-        
+        padding-right: 1rem;   
     }
     
     .stApp {
-        
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
@@ -41,95 +35,38 @@ st.markdown("""
         min-height: 100vh;
         background-image: url("https://images.unsplash.com/photo-1604599340287-2042e85a3802?q=80&w=774&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
     }
-    
-    .navbar {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 20px 40px;
-        margin-top: 90px;
-        backdrop-filter: blur(10px);
-        font-size:70px;
-        margin-bottom: 20px;
-    }
-    
-    .logo {
-        color: white;
-        font-size: 24px;
-        font-weight: bold;
-        letter-spacing: 2px;
-    }
-    
+
     .nav-links {
         display: flex;
         gap: 10px;
-        align-items: centre;
-        font-size:px;
-    }
-    
-    div.stButton > button:first-child {
-        background: none;
-        color: white;
-        border-radius: 0px;
-        height: 50px;
-        width: 200px;
-        font-size: 1000px;
-        font-weight: bold;
-        border:0px solid #2E8B57;
-        transition: 0.3s;
     }
 
-    .main-content {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        min-height: 70vh;
-        color: white;
-        padding: 0 20px;
-    }
-    
-   
-     .earth-title {
-        font-size: 80px;
-        font-weight: 300;
-        letter-spacing: 8px;
-        margin-bottom:0px;
-        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-    }
-    
-    .description {
-        max-width: 600px;
+    div.stButton > button:first-child {
+        background: transparent;
+        color: #ffffff;            
+        font-weight: 600;
         font-size: 16px;
-        line-height: 1.6;
-        margin-top: 100px;
-        opacity: 0.9;
+        padding: 8px 20px;
+        border: none;
+        border-bottom: 2px solid transparent; 
+        cursor: pointer;
+        transition: all 0.3s ease;
     }
-    
-    
-    
-    
-    
-    @media (max-width: 768px) {
-        .navbar {
-            flex-direction: column;
-            gap: 10px;
-            padding: ;
-            font-size:70px;
-        }
-        
-        .earth-title {
-            font-size: 50px;
-            letter-spacing: 4px;
-        }
-        
-        .description {
-            font-size: 14px;
-        }
+
+    div.stButton > button:first-child:hover {
+        border-bottom: 2px solid #ffffff;  
+        color: #ffffff;                   
+    }
+
+    div.stButton > button:first-child:active {
+        border-bottom: 2px solid #ffffff; 
+        color:#ffffff;
     }
 </style>
 """, unsafe_allow_html=True)
+
+if 'current_page' not in st.session_state:
+    st.session_state.current_page = 'home'
 
 @st.cache_resource
 def create_dummy_data():
@@ -226,18 +163,92 @@ with col6:
         navigate_to('time_depth')
 
 
+if st.session_state.current_page == "home":
+    # Title and description (center aligned)
+    st.markdown("<h2 style='text-align: center;'>ARGO</h2>", unsafe_allow_html=True)
+    st.markdown("<h2 style='text-align: center;'>Floatchat</h2>", unsafe_allow_html=True)
+    st.markdown(
+        "<p style='text-align: center; font-size: 1.1rem; color: #ddd;'>"
+        
+        "Explore ARGO float data, analyze ocean profiles, and discover the secrets of our ocean."
+        "</p>",
+        unsafe_allow_html=True,
+    )
 
-if st.session_state.current_page == 'home':
-    st.markdown("""
-    <div class="main-content">
-        <div class="earth-title">ARGO</div>
-        <div class="earth-title">FloatChat</div>
-        <div class="description">
-            Learn more about this fascinating miracle that we call our home, Planet Earth. 
-            Explore ARGO float data, analyze ocean profiles, and discover the secrets of our oceans.
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
+    
+
+    # Three-column layout for 6 features
+    col1, col2, col3 = st.columns(3)
+
+    with col1:
+        st.markdown("### FloatChat")
+        st.write(
+            """
+            FloatChat is an intelligent chatbot integrated into the dashboard wherein 
+            users can query float locations, temperature trends, salinity variations,  
+            making the data accessible even to non-technical users.  
+            
+            """
+        )
+
+        st.markdown("### Map Trajectory")
+        st.write(
+            """
+            The map trajectory section visualizes the real-time location  
+            of ARGO floats across the ocean. It provides an interactive map  
+            with zoom and date filters, helping researchers monitor float activity. 
+            
+            """
+        )
+
+    with col2:
+        st.markdown("### Depth-Time Plot")
+        st.write(
+            """
+            The depth-time plot shows how ocean properties change with both  
+            depth and time. It generates heatmaps for temperature, salinity,  
+            allowing users to explore ocean variability at different depths.
+            """
+        )
+
+        st.markdown("### Profile Comparison")
+        st.write(
+            """
+            Profile comparison enables analysis of different  
+            ARGO float profiles. Researchers can overlay graphs, calculate  
+            differences, and detect anomalies, which is crucial for  
+            studying regional variations in ocean datasets.
+            """
+        )
+
+    with col3:
+        st.markdown("### Comparative Analysis")
+        st.write(
+            """
+            Compare multiple floats data across the Indian Ocean.This
+            feature highlights differences and similarities in profiles,
+            making research more comprehensive.
+
+
+            """
+        )
+
+        st.markdown("### Key Highlights")
+        st.write(
+            """
+              
+
+             Access data through interactive dashboards with plots and maps.  
+             Use AI-powered chat support to understand scientific information.  
+             Compare floats and profiles across regions and time periods.  
+             
+  
+            """
+        )
+
+
+
+
 
 elif st.session_state.current_page == 'chatbot':
    
@@ -378,3 +389,4 @@ elif st.session_state.current_page == 'time_depth':
     st.markdown('</div>', unsafe_allow_html=True)
 
 st.markdown("<div style='height: 50px;'></div>", unsafe_allow_html=True)
+
