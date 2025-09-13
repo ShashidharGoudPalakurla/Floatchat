@@ -256,13 +256,8 @@ elif st.session_state.current_page == 'map':
 
     
 
-<<<<<<< HEAD
-    show_map()  
-    st.markdown('</div>', unsafe_allow_html=True)
-=======
     show_map()   # renamed function
 
->>>>>>> 7da6609286093c30800976141096e70ca0cb5c82
 
     
 
