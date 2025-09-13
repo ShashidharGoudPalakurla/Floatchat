@@ -1,12 +1,10 @@
-
 import streamlit as st
 import pandas as pd
 import numpy as np
+from datetime import datetime, timedelta
+from geopy.distance import geodesic
 import plotly.express as px
 import plotly.graph_objects as go
-from datetime import datetime
-from geopy.distance import geodesic
-
 
 def show_map():
   
