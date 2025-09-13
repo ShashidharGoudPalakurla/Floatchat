@@ -27,6 +27,34 @@ st.markdown(
        
     }
 
+    .hero-title{
+        text-align:center;
+        font-size:70px;
+        margin-right:650px;
+    }
+
+    .title{
+        text-align:center;
+        font-size:100px;
+        margin-right:450px;
+        margin-top:0px;
+
+    }
+
+    .hero-sub{
+        font-size:30px;
+        margin-left: 220px;
+    }
+
+    .start-button{
+        padding:10px 40px;
+        border-radius: 50px;
+        font-size:30px;
+        margin-left:200px;
+        margin-top: 100px;
+        border:none;
+        background-color:#001528;
+    }
 
     </style>
     """,
@@ -34,8 +62,21 @@ st.markdown(
 )
 
 
-st.markdown('<div class="hero-title"> ARGO FLOATCHAT</div>', unsafe_allow_html=True)
-st.markdown('<div class="hero-sub">Dive into ocean data, surface with insights</div>', unsafe_allow_html=True)
+st.markdown('<div class="hero-title"> ARGO </div>', unsafe_allow_html=True)
+st.markdown('<div class="title"> FloatChat</div>', unsafe_allow_html=True)
+
+st.markdown('<div class="hero-sub"> tagline</div>', unsafe_allow_html=True)
+
+st.markdown(
+    """
+    <a href="?page=front">
+        <button class="start-button">
+            Lets Dive!
+        </button>
+    </a>
+    """,
+    unsafe_allow_html=True
+)
 
 
 
