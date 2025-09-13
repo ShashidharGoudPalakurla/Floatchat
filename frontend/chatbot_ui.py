@@ -7,6 +7,9 @@ def show_chatbot_ui():
         background:;
         color: white;
         font-family: 'Poppins', sans-serif;
+        padding:100px;
+         
+        
     }
 
  
@@ -17,6 +20,8 @@ def show_chatbot_ui():
         margin: 8px 0;
         color: #ffffff;
         font-weight: 500;
+        max-width: 500px; 
+        width:100%; 
     }
 
   
@@ -27,6 +32,8 @@ def show_chatbot_ui():
         margin: 8px 0;
         color: white;
         font-weight: 500;
+        max-width: 500px;
+        width:100%;  
     }
 
     .stChatInput:focus-within {
@@ -34,10 +41,23 @@ def show_chatbot_ui():
      box-shadow: 0 0 6px deepskyblue; 
      border-radius:18px;
     }
+               
+    [data-testid="stChatInput"] {
+    width: 100% !important;            
+    max-width: 700px;                 
+    margin: 0 auto;                   
+}
+
+[data-testid="stChatInput"] textarea {
+    width: 100% !important;           
+    resize: none !important;           
+    box-sizing: border-box
+}
 
    
     
     </style>
+               
      """, unsafe_allow_html=True)
 
 
