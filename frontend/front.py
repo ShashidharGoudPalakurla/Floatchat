@@ -257,8 +257,7 @@ elif st.session_state.current_page == 'map':
     st.title("Map Trajectory")
     st.write("Visualize the trajectory of ARGO floats across the ocean.")
 
-    show_map()   # renamed function
-
+    show_map()  
     st.markdown('</div>', unsafe_allow_html=True)
 
     

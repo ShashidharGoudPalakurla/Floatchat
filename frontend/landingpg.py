@@ -15,7 +15,7 @@ lottie_ocean = load_lottieurl("https://assets10.lottiefiles.com/packages/lf20_t2
 
 st.set_page_config(
     page_title="ARGO AI Ocean Explorer",
-    page_icon="🌊",
+    
     layout="wide"
 )
 
@@ -121,7 +121,7 @@ st.markdown(
 )
 
 
-st.markdown('<div class="hero-title">🌊 ARGO AI Ocean Explorer</div>', unsafe_allow_html=True)
+st.markdown('<div class="hero-title"> ARGO AI Ocean Explorer</div>', unsafe_allow_html=True)
 st.markdown('<div class="hero-sub">Where Data Meets the Deep — Time, Depth & Intelligence in One Place.</div>', unsafe_allow_html=True)
 
 
@@ -134,12 +134,12 @@ with col1:
     st.markdown(
         """
         <div class="feature-card">
-            <h3>⏳ Deep Time–Depth Analytics</h3>
+            <h3> Deep Time–Depth Analytics</h3>
             <p class="tagline">“Unveil the hidden stories beneath every ocean layer.”</p>
             <p>Generate <b>heatmaps & vertical profiles</b> for temperature, salinity, and BGC parameters. Unlock deep climate insights across time and depth.</p>
         </div>
         <div class="feature-card">
-            <h3>🧭 3D Trajectory Mapping</h3>
+            <h3> 3D Trajectory Mapping</h3>
             <p class="tagline">“Follow ARGO floats across space and depth — like never before.”</p>
             <p>Explore ARGO floats in <b>interactive 3D</b> (Longitude–Latitude–Depth). Rotate, zoom, and reveal the hidden currents of our oceans.</p>
         </div>
@@ -151,12 +151,12 @@ with col2:
     st.markdown(
         """
         <div class="feature-card">
-            <h3>💬 Conversational Ocean AI</h3>
+            <h3> Conversational Ocean AI</h3>
             <p class="tagline">“Ask the ocean in plain words, get science-backed insights.”</p>
             <p>Ask queries like <i>“Show salinity near the equator”</i>. Our <b>RAG-powered AI</b> translates questions into precise data queries.</p>
         </div>
         <div class="feature-card">
-            <h3>📊 Smart Dashboards & Insights</h3>
+            <h3> Smart Dashboards & Insights</h3>
             <p class="tagline">“Visualize. Compare. Export. All in one intuitive dashboard.”</p>
             <p>Use <b>geospatial maps, interactive plots, and parameter comparisons</b>. Export results in NetCDF, CSV, or ASCII formats.</p>
         </div>
@@ -183,8 +183,8 @@ st.markdown(
     """
     <div class="cta">
         <p style="font-size:22px; font-weight:400; color:white; text-shadow:1px 1px 6px #00000091;">
-        🚀 Ready to explore the deep blue with AI-powered insights?</p>
-        <button class="cta-btn" onclick="window.location.href='pages/explorer.py'">🌊 Launch  Explorer</button>
+          Ready to explore the deep blue with AI-powered insights?</p>
+        <button class="cta-btn" onclick="window.location.href='pages/explorer.py'"> Launch  Explorer</button>
     </div>
     """,
     unsafe_allow_html=True
