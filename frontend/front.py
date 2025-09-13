@@ -1,15 +1,15 @@
-def frontpage():
-    import streamlit as st
-    import pandas as pd
-    import numpy as np
-    import plotly.express as px
-    import plotly.graph_objects as go
-    import sqlite3
-    from datetime import datetime, timedelta
-    from timedepthplot import show_time_depth_plot
-    from map_page import show_map
-    from chatbot_ui import show_chatbot_ui
 
+import streamlit as st
+import pandas as pd
+import numpy as np
+import plotly.express as px
+import plotly.graph_objects as go
+import sqlite3
+from datetime import datetime, timedelta
+from timedepthplot import show_time_depth_plot
+from map_page import show_map
+from chatbot_ui import show_chatbot_ui
+def show_front_page():
 
     st.set_page_config(
         page_title="ARGO-FloatChat",
@@ -381,3 +381,4 @@ def frontpage():
         st.markdown('</div>', unsafe_allow_html=True)
     
     st.markdown("<div style='height: 50px;'></div>", unsafe_allow_html=True)
+    
