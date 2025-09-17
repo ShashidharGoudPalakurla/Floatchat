@@ -10,9 +10,10 @@ import json
 import math
 import os
 from dotenv import load_dotenv
+from flask_cors import CORS
+
 
 load_dotenv()
-
 DB_CONFIG = {
     "host": "localhost",
     "database": "floatchatai",
@@ -168,3 +169,4 @@ def home():
 
 if __name__ == "__main__":
     app.run(debug=True)
+CORS(app)
