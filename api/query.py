@@ -36,12 +36,10 @@ def get_embedding(text):
     return model.encode(text).tolist()
 
 def llm_explain(user_query, profile_data):
-    # Build a quick summary of the profile data
     summary = f"Profile at lat={profile_data['lat']}, lon={profile_data['lon']} on {profile_data['time']}. Depth levels:\n"
     for lvl in profile_data["depth_levels"]:
         summary += f"- Pressure: {lvl['pres']} dbar, Temp: {lvl['temp']}°C, Salinity: {lvl['salinity']}\n"
 
-    # Chatbot-style prompt
     prompt = f"""
 Hey! You asked: "{user_query}"
 
@@ -52,7 +50,6 @@ Here's a friendly explanation of the ocean data I found:
 In simple terms, describe what the ocean conditions are like here, relate it to the user's question, and keep it short, clear, and conversational – like you're chatting with the user. You can add emojis if it feels natural.
 """
 
-    # Send the prompt to Gemini
     response = gemini_model.generate_content(prompt)
     return response.text.strip()
 

@@ -1,5 +1,9 @@
-we will add the rerequired libraries here
-fastapi
-uvicorn
-psycopg2-binary
-qdrant-client
+#required libraries
+flask==3.0.3
+flask-cors==4.0.0
+psycopg2-binary==2.9.9
+numpy==1.26.4
+sentence-transformers==3.0.1
+geopy==2.4.1
+google-generativeai==0.8.3
+python-dotenv==1.0.1

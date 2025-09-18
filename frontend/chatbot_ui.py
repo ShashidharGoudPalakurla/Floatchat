@@ -4,12 +4,17 @@ import time
 import json
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
+import os
+from dotenv import load_dotenv 
 
 def query_backend(user_query):
     """Query the backend API at http://127.0.0.1:5000/query"""
+    load_dotenv()
     try:
+        query_api = os.getenv("QUERY_API", default="http://127.0.0.1:5000/query")
+
         response = requests.post(
-            "http://127.0.0.1:5000/query", 
+            query_api, 
             json={"query": user_query},
             headers={"Content-Type": "application/json"},
             timeout=30
@@ -173,19 +178,16 @@ def show_chatbot_ui():
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
     
-    /* Global Styles */
     .stApp {
         background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
         font-family: 'Inter', sans-serif;
         color: white;
     }
     
-    /* Hide Streamlit elements */
     #MainMenu {visibility: hidden;}
     footer {visibility: hidden;}
     .stDeployButton {display: none;}
     
-    /* Header */
     .main-header {
         text-align: center;
         padding: 2rem 0;
@@ -209,20 +211,17 @@ def show_chatbot_ui():
         font-weight: 400;
     }
     
-    /* Chat Container */
     .chat-container {
         max-width: 900px;
         margin: 0 auto;
         padding: 0 1rem;
     }
     
-    /* Chat Messages - Fixed Alignment */
     .stChatMessage {
         margin: 1.5rem 0 
         padding: 0 
     }
     
-    /* User Message - Right Aligned */
     .stChatMessage[data-testid="chat-message-user"] {
         display: flex 
         justify-content: flex-end 
@@ -239,7 +238,6 @@ def show_chatbot_ui():
         margin-left: auto 
     }
     
-    /* Assistant Message - Left Aligned */
     .stChatMessage[data-testid="chat-message-assistant"] {
         display: flex 
         justify-content: flex-start 
@@ -258,7 +256,10 @@ def show_chatbot_ui():
         margin-right: auto 
     }
     
+<<<<<<< HEAD
     
+=======
+>>>>>>> b088ac7 (Chatbot updated)
     .thinking-container {
         background: rgba(255, 255, 255, 0.1) 
         color: white 
@@ -276,7 +277,6 @@ def show_chatbot_ui():
         font-style: italic;
     }
     
-    /* Chat Input */
     .stChatInput > div {
         background: rgba(255, 255, 255, 0.1) 
         backdrop-filter: blur(10px) 
@@ -308,7 +308,6 @@ def show_chatbot_ui():
         margin: 0.5rem 
     }
     
-    /* Metadata */
     .metadata-container {
         margin-top: 1rem;
         padding: 1rem;
@@ -324,12 +323,10 @@ def show_chatbot_ui():
         color: rgba(255, 255, 255, 0.8);
     }
     
-    /* Hide chat avatars */
     .stChatMessage img {
         display: none 
     }
     
-    /* Responsive */
     @media (max-width: 768px) {
         .main-title {
             font-size: 2rem;
@@ -343,7 +340,6 @@ def show_chatbot_ui():
     </style>
     """, unsafe_allow_html=True)
 
-    # Header
     st.markdown("""
     <div class="main-header">
         <h1 class="main-title">FloatChat</h1>
@@ -351,27 +347,21 @@ def show_chatbot_ui():
     </div>
     """, unsafe_allow_html=True)
 
-    # Initialize session state
     if "messages" not in st.session_state:
         st.session_state.messages = []
 
-    # Chat container
     with st.container():
-        # Display chat history
         for msg in st.session_state.messages:
             if msg["role"] == "user":
                 with st.chat_message("user"):
                     st.markdown(msg["content"])
             else:
                 with st.chat_message("assistant"):
-                    # Display the AI response text
                     st.markdown(msg["content"])
                     
-                    # Display metadata if it exists
                     if "metadata" in msg:
                         display_metadata(msg["metadata"])
                     
-                    # Display chart if it exists
                     if "chart_data" in msg:
                         chart = create_ocean_data_charts(msg["chart_data"])
                         if chart:
@@ -380,46 +370,37 @@ def show_chatbot_ui():
     
     if user_input := st.chat_input("Ask me about ocean data..."):
 
-        # Add user message to session state
         st.session_state.messages.append({"role": "user", "content": user_input})
         with st.chat_message("user"):
             st.markdown(user_input)
 
         with st.chat_message("assistant"):
-            # Show thinking animation
             thinking_placeholder = show_thinking_animation()
             
-            # Query backend
             response_data = query_backend(user_input)
             thinking_placeholder.empty()
 
             if response_data and len(response_data) > 0:
-                data = response_data[0]  # Get first item from array
+                data = response_data[0]  
                 
                 if "query_explain" in data:
-                    # Display AI response
                     ai_response = data["query_explain"]
                     st.markdown(ai_response)
                     
-                    # Display metadata
                     display_metadata(data)
                     
-                    # Create message object for session state
                     message_obj = {
                         "role": "assistant", 
                         "content": ai_response,
-                        "metadata": data  # Store metadata separately
+                        "metadata": data 
                     }
                     
-                    # Create and display charts
                     if "depth_levels" in data and data["depth_levels"]:
                         chart = create_ocean_data_charts(data["depth_levels"])
                         if chart:
                             st.plotly_chart(chart, use_container_width=True, config={'displayModeBar': False})
-                            # Store chart data instead of the chart object
                             message_obj["chart_data"] = data["depth_levels"]
                     
-                    # Add to session state
                     st.session_state.messages.append(message_obj)
                 else:
                     error_msg = "No explanation available in the response."
