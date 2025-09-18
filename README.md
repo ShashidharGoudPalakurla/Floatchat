@@ -314,27 +314,13 @@ MODEL_NAME = 'all-MiniLM-L6-v2'  # Sentence transformer model
 }
 ```
 
----
-
-### Development Setup
-
-1. Fork the repository
-2. Create a feature branch: `git checkout -b feature/amazing-feature`
-3. Make your changes
-4. Add tests if applicable
-5. Commit your changes: `git commit -m 'Add amazing feature'`
-6. Push to the branch: `git push origin feature/amazing-feature`
-7. Open a Pull Request
-
----
-
 ##  Acknowledgments
 
-- **ARGO Program** - For providing the oceanographic data
-- **Streamlit** - For the amazing web app framework
-- **FastAPI** - For the high-performance API framework
-- **PostgreSQL** - For the robust database system
-- **Sentence Transformers** - For the AI embeddings
+- **ARGO Program**
+- **Streamlit** 
+- **FastAPI** 
+- **PostgreSQL** 
+- **Sentence Transformers** 
 
 ---
 
