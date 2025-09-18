@@ -34,49 +34,43 @@ st.markdown("""
     
     .stApp {
         font-family: 'Inter', sans-serif;
-        background: linear-gradient(135deg, #0c1445 0%, #1e3a5f 50%, #2d5aa0 100%);
         background-attachment: fixed;
         min-height: 100vh;
         color: #ffffff;
+        background-image: url("https://images.unsplash.com/photo-1604599340287-2042e85a3802?q=80&w=774&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+
+       
     }
 
-    /* Navigation Bar Styling */
-    .nav-container {
-        background: rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(10px);
-        border-radius: 20px;
-        padding: 10px;
-        margin-bottom: 2rem;
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-    }
+    
 
-    div.stButton > button:first-child {
-        background: rgba(255, 255, 255, 0.1);
-        color: #ffffff;            
-        font-weight: 500;
-        font-size: 14px;
-        padding: 12px 24px;
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        border-radius: 12px;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        backdrop-filter: blur(5px);
-        width: 100%;
-        height: 50px;
-    }
+    /* Transparent navbar buttons */
+div.stButton > button:first-child {
+    background: transparent;
+    color: #ffffff;            /* white text */
+    font-weight: 600;
+    font-size: 16px;
+    padding: 8px 20px;
+    border: none;
+    border-bottom: 2px solid transparent;  /* invisible by default */
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
 
-    div.stButton > button:first-child:hover {
-        background: rgba(255, 255, 255, 0.2);
-        transform: translateY(-2px);
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-        border-color: rgba(255, 255, 255, 0.4);
-    }
+/* Hover effect - white underline */
+div.stButton > button:first-child:hover {
+    border-bottom: 2px solid #ffffff;  /* white underline */
+    color: #ffffff;                   /* keep text white */
+}
 
-    div.stButton > button:first-child:active {
-        background: rgba(255, 255, 255, 0.25);
-        transform: translateY(0px);
-    }
+/* Active/selected effect */
+div.stButton > button:first-child:active {
+    border-bottom: 2px solid #ffffff;  /* solid white underline */
+    color: #ffffff;
+}
 
     /* Hero Section */
     .hero-section {
@@ -90,23 +84,22 @@ st.markdown("""
         font-weight: 700;
         background: linear-gradient(135deg, #ffffff, #a8c8ec);
         -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
         background-clip: text;
         margin-bottom: 1rem;
-        text-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+        
     }
 
     .hero-subtitle {
         font-size: 1.5rem;
         font-weight: 400;
-        color: #b8d4f0;
+        color: #ffff;
         margin-bottom: 1rem;
         letter-spacing: 0.5px;
     }
 
     .hero-description {
         font-size: 1.1rem;
-        color: #d1e3f5;
+        color: #ffff;
         max-width: 700px;
         margin: 0 auto;
         line-height: 1.6;
@@ -347,14 +340,14 @@ def navigate_to(page):
     st.session_state.current_page = page
     st.rerun()
 
-st.markdown('<div class="nav-container">', unsafe_allow_html=True)
+
 nav_cols = st.columns([1, 1, 1, 1, 1, 1])
 nav_items = [
-    ("🏠", "Home", 'home'),
-    ("💬", "FloatChat", 'chatbot'),
-    ("🗺️", "Map", 'map'),
-    ("📊", "Compare", 'comparison'),
-    ("📈", "Depth-Time", 'time_depth')
+    ("", "Home", 'home'),
+    ("", "FloatChat", 'chatbot'),
+    ("", "Map", 'map'),
+    ("", " Profile Comparision", 'comparison'),
+    ("", "Depth-Time Plots", 'time_depth')
 ]
 
 for i, (icon, label, page) in enumerate(nav_items):
@@ -499,28 +492,28 @@ if st.session_state.current_page == "home":
         """, unsafe_allow_html=True)
 
 elif st.session_state.current_page == "chatbot":
-    st.markdown('<div class="page-title">🤖 FloatChat AI Assistant</div>', unsafe_allow_html=True)
+    st.markdown('<div class="page-title">FloatChat AI Assistant</div>', unsafe_allow_html=True)
     show_chatbot_ui()
 
 elif st.session_state.current_page == "map":
-    st.markdown('<div class="page-title">🗺️ Interactive Float Trajectories</div>', unsafe_allow_html=True)
+    st.markdown('<div class="page-title">ARGO float location</div>', unsafe_allow_html=True)
     show_map()
 
 elif st.session_state.current_page == "comparison":
-    st.markdown('<div class="page-title">📊 Profile Comparison Analysis</div>', unsafe_allow_html=True)
+    st.markdown('<div class="page-title">Profile Comparison Analysis</div>', unsafe_allow_html=True)
     df = load_data()
     main_col, sidebar_col = st.columns([0.7, 0.3])
 
     with sidebar_col:
         st.markdown('<div class="sidebar-content">', unsafe_allow_html=True)
-        st.markdown("### 🎛️ Analysis Controls")
+        st.markdown("### Analysis Controls")
         available_years = sorted(df['year'].unique())
         properties = ['salinity', 'temperature', 'air_temp', 'oxygen']
         property_labels = {
-            'salinity': '🧂 Salinity',
-            'temperature': '🌡️ Temperature', 
-            'air_temp': '🌤️ Air Temperature',
-            'oxygen': '💨 Oxygen'
+            'salinity': ' Salinity',
+            'temperature': ' Temperature', 
+            'air_temp': ' Air Temperature',
+            'oxygen': 'Oxygen'
         }
         
         selected_property = st.selectbox("Choose Profile Type", properties, 
@@ -538,22 +531,18 @@ elif st.session_state.current_page == "comparison":
         df_year1 = df[df['year'] == year1]
         df_year2 = df[df['year'] == year2]
 
-        st.markdown('<div class="plot-container">', unsafe_allow_html=True)
-        st.subheader(f"📈 {selected_property.title()} Comparison: {year1} vs {year2}")
+        
+        st.subheader(f" {selected_property.title()} Comparison: {year1} vs {year2}")
         combined_df = pd.concat([df_year1.assign(year_label=f'{year1}'), df_year2.assign(year_label=f'{year2}')])
         fig_combined = px.line(combined_df, x='time', y=selected_property, color='year_label',
                                title=f"{selected_property.title()} Time Series Comparison",
                                color_discrete_map={f'{year1}':'#4fc3f7', f'{year2}':'#f06292'})
-        fig_combined.update_layout(
-            plot_bgcolor='rgba(0,0,0,0)',
-            paper_bgcolor='rgba(0,0,0,0)',
-            font_color='white'
-        )
+        
         st.plotly_chart(fig_combined, use_container_width=True)
         st.markdown('</div>', unsafe_allow_html=True)
 
-        st.markdown('<div class="plot-container">', unsafe_allow_html=True)
-        st.subheader("📊 Distribution Analysis")
+        
+        st.subheader(" Distribution Analysis")
         fig_box = go.Figure()
         fig_box.add_trace(go.Box(y=df_year1[selected_property], name=f'{year1}', 
                                 boxpoints='outliers', marker_color='#4fc3f7'))
@@ -569,7 +558,7 @@ elif st.session_state.current_page == "comparison":
         st.plotly_chart(fig_box, use_container_width=True)
         st.markdown('</div>', unsafe_allow_html=True)
 
-        st.subheader("🔍 Individual Year Analysis")
+        st.subheader("Individual Year Analysis")
         year_col1, year_col2 = st.columns(2)
         with year_col1:
             st.markdown('<div class="plot-container">', unsafe_allow_html=True)
@@ -589,11 +578,11 @@ elif st.session_state.current_page == "comparison":
             st.plotly_chart(fig2, use_container_width=True)
             st.markdown('</div>', unsafe_allow_html=True)
 
-        st.subheader("📋 Statistical Summary")
+        st.subheader("Statistical Summary")
         stats_col1, stats_col2 = st.columns(2)
         with stats_col1:
             st.markdown('<div class="content-card">', unsafe_allow_html=True)
-            st.markdown(f"**📊 {year1} Statistics**")
+            st.markdown(f"** {year1} Statistics**")
             st.write(f"**Mean:** {df_year1[selected_property].mean():.2f}")
             st.write(f"**Std Dev:** {df_year1[selected_property].std():.2f}")
             st.write(f"**Min:** {df_year1[selected_property].min():.2f}")
@@ -601,7 +590,7 @@ elif st.session_state.current_page == "comparison":
             st.markdown('</div>', unsafe_allow_html=True)
         with stats_col2:
             st.markdown('<div class="content-card">', unsafe_allow_html=True)
-            st.markdown(f"**📊 {year2} Statistics**")
+            st.markdown(f"** {year2} Statistics**")
             st.write(f"**Mean:** {df_year2[selected_property].mean():.2f}")
             st.write(f"**Std Dev:** {df_year2[selected_property].std():.2f}")
             st.write(f"**Min:** {df_year2[selected_property].min():.2f}")
@@ -609,7 +598,7 @@ elif st.session_state.current_page == "comparison":
             st.markdown('</div>', unsafe_allow_html=True)
 
 elif st.session_state.current_page == "time_depth":
-    st.markdown('<div class="page-title">📈 Depth-Time Analysis</div>', unsafe_allow_html=True)
+    st.markdown('<div class="page-title">Depth-Time Analysis</div>', unsafe_allow_html=True)
     show_time_depth_plot()
 
 st.markdown("<div style='height: 50px;'></div>", unsafe_allow_html=True)
