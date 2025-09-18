@@ -1,7 +1,65 @@
-streamlit
-pandas
-numpy
-xarray
-plotly
-geopy
-sqlalchemy
+# Global Requirements for FloatChat Project
+# This file contains all dependencies needed across the entire project
+# Install with: pip install -r requirements.txt
+
+# =============================================================================
+# API Dependencies (Flask Backend)
+# =============================================================================
+flask==3.0.3
+flask-cors==4.0.0
+psycopg2-binary==2.9.9
+numpy==1.26.4
+sentence-transformers==3.0.1
+geopy==2.4.1
+google-generativeai==0.8.3
+python-dotenv==1.0.1
+
+# =============================================================================
+# Frontend Dependencies (Streamlit Application)
+# =============================================================================
+streamlit>=1.28.0
+pandas>=2.0.0
+plotly>=5.15.0
+plotly-express>=0.4.1
+sqlalchemy>=2.0.0
+Pillow>=10.0.0
+requests>=2.31.0
+
+# =============================================================================
+# Ingestion Dependencies (Data Processing)
+# =============================================================================
+xarray>=2023.1.0
+qdrant-client>=1.6.0
+
+# =============================================================================
+# Common Dependencies (Used across multiple modules)
+# =============================================================================
+# Note: numpy is already specified in API section
+# Note: pandas is already specified in Frontend section  
+# Note: geopy is already specified in API section
+# Note: python-dotenv is already specified in API section
+
+# =============================================================================
+# Development and Testing Dependencies (Optional)
+# =============================================================================
+# Uncomment these if you need development tools
+# pytest>=7.4.0
+# black>=23.0.0
+# flake8>=6.0.0
+# mypy>=1.5.0
+
+# =============================================================================
+# Installation Notes
+# =============================================================================
+# 1. For API only: pip install flask flask-cors psycopg2-binary numpy sentence-transformers geopy google-generativeai python-dotenv
+# 2. For Frontend only: pip install streamlit pandas plotly plotly-express sqlalchemy Pillow requests
+# 3. For Ingestion only: pip install xarray pandas numpy psycopg2-binary qdrant-client
+# 4. For full project: pip install -r requirements.txt
+
+# =============================================================================
+# Version Compatibility Notes
+# =============================================================================
+# - Python 3.8+ required
+# - PostgreSQL database required for psycopg2-binary
+# - Some packages may require additional system dependencies
+# - For GPU acceleration (optional): install torch with CUDA support
