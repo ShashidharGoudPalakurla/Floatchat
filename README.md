@@ -31,6 +31,7 @@ FloatChat is an innovative **AI-powered conversational interface** that transfor
 | **Real-time Analytics** | Live data processing and visualization | FastAPI + Async Processing |
 | **Data Pipeline** | Automated NetCDF ingestion and processing | xarray + pandas |
 
+---
 
 ## Architecture Overview
 
@@ -105,7 +106,7 @@ floatchat/
 └──  requirements.txt         # Main project dependencies
 ```
 
-# ⚙️ Setup & Installation
+---
 
 ## 🚀 Quick Start Guide
 
@@ -315,10 +316,6 @@ MODEL_NAME = 'all-MiniLM-L6-v2'  # Sentence transformer model
 
 ---
 
-## Contributing
-
-We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.md) for details.
-
 ### Development Setup
 
 1. Fork the repository
@@ -328,12 +325,6 @@ We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.
 5. Commit your changes: `git commit -m 'Add amazing feature'`
 6. Push to the branch: `git push origin feature/amazing-feature`
 7. Open a Pull Request
-
----
-
-## 📝 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ---
 
@@ -350,15 +341,10 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ##  Support
 
 - **Documentation**: [Wiki](https://github.com/SyedOwais312/floatchat/wiki)
-- **Issues**: o issues
-
----
 
 ---
 
 <div align="center">
-
-**Made with ❤️ for the Ocean Science Community**
 
 [Explore the Depths](http://localhost:8501) • [ Documentation](https://github.com/SyedOwais312/floatchat/wiki) • [Report Bug](https://github.com/SyedOwais312/floatchat/issues)
 
