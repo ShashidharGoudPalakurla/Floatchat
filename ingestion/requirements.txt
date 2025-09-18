@@ -1,4 +1,5 @@
 # Ingestion Dependencies - Data Processing Pipeline
+
 # Scientific data handling
 xarray>=2023.1.0
 numpy>=1.24.0
@@ -7,12 +8,6 @@ pandas>=2.0.0
 # Database connectivity
 psycopg2-binary>=2.9.0
 
-# Vector database (if using Qdrant)
-qdrant-client>=1.6.0
-
-# Machine Learning for embeddings
+# Machine learning for embeddings
 sentence-transformers>=3.0.0
 
-# Built-in modules used (no installation needed):
-# - os
-# - math

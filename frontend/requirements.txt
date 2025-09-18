@@ -25,12 +25,3 @@ requests>=2.31.0
 
 # Environment variables
 python-dotenv>=1.0.0
-
-# Date and time handling (built-in, but explicit for clarity)
-# datetime - built-in module
-
-# Path handling (built-in, but explicit for clarity) 
-# pathlib - built-in module
-
-# Base64 encoding (built-in, but explicit for clarity)
-# base64 - built-in module
