@@ -13,28 +13,27 @@
 [![Sentence Transformers](https://img.shields.io/badge/Sentence%20Transformers-3.0+-orange.svg)](https://huggingface.co/sentence-transformers)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-[🚀 Quick Start](#-quick-start-guide) • [📖 Documentation](#-documentation) • [🎯 Features](#-key-features) • [🤝 Contributing](#-contributing)
 
 </div>
 
 ---
 
-## 🎯 What is FloatChat?
+## What is FloatChat?
 
 FloatChat is an innovative **AI-powered conversational interface** that transforms complex ARGO oceanographic data into intuitive, natural language queries. Built with modern technologies, it allows researchers, oceanographers, and data enthusiasts to explore ocean data through simple conversations, interactive visualizations, and intelligent insights.
 
-### ✨ Key Highlights
+### Key Highlights
 
-- **🤖 AI-Powered Search**: Uses sentence transformers and semantic embeddings for intelligent data discovery
-- **🌍 Geospatial Intelligence**: Automatic geocoding and location-aware filtering  
-- **📊 Interactive Visualizations**: Beautiful depth-time plots, maps, and real-time analytics
-- **💬 Natural Language Interface**: Ask questions in plain English about ocean data
-- **⚡ Real-time Processing**: Fast query response with intelligent caching and hybrid scoring
-- **🎨 Modern UI**: Beautiful Streamlit interface with ocean-themed design
+- **AI-Powered Search**: Uses sentence transformers and semantic embeddings for intelligent data discovery
+- **Geospatial Intelligence**: Automatic geocoding and location-aware filtering  
+- **Interactive Visualizations**: Beautiful depth-time plots, maps, and real-time analytics
+- **Natural Language Interface**: Ask questions in plain English about ocean data
+- **Real-time Processing**: Fast query response with intelligent caching and hybrid scoring
+- **Modern UI**: Beautiful Streamlit interface with ocean-themed design
 
 ---
 
-## 🏗️ Architecture Overview
+##  Architecture Overview
 
 ```mermaid
 graph TB
@@ -58,7 +57,7 @@ graph TB
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 ### Backend & API
 - **Flask** - Lightweight web framework for API development
@@ -91,6 +90,7 @@ floatchat-clean/
 │   ├── query.py                # Advanced query processing with Gemini AI
 │   ├── fallback_query.py       # Fallback query handling
 │   └── requirements.txt        # Backend dependencies
+|
 ├── 📁 frontend/                # Streamlit user interface
 │   ├── chatbot_ui.py           # Main chat interface with visualizations
 │   ├── front.py                # Multi-page application with navigation
@@ -101,12 +101,15 @@ floatchat-clean/
 │   ├── FloatChat.png           # Application logo
 │   ├── layered-waves-haikei.svg # Background graphics
 │   └── requirements.txt        # Frontend dependencies
+|
 ├── 📁 ingestion/               # Data processing pipeline
 │   ├── main.py                 # NetCDF → PostgreSQL + Vector embeddings
 │   ├── requirements.txt        # Ingestion dependencies
 │   └── tempCodeRunnerFile.py   # Development utilities
+|
 ├── 📁 data/                    # Raw NetCDF oceanographic files
 │   └── 20250901_prof.nc        # Sample ARGO float data
+|
 ├── 📁 infra/                   # Infrastructure and setup scripts
 ├── dummy.db                    # SQLite demo database
 ├── requirements.txt            # Global project dependencies
@@ -115,7 +118,7 @@ floatchat-clean/
 
 ---
 
-## 🚀 Quick Start Guide
+##  Quick Start Guide
 
 ### Prerequisites
 
@@ -123,14 +126,14 @@ floatchat-clean/
 - **PostgreSQL 13+** (or SQLite for demo)
 - **Git**
 
-### 1️⃣ Clone the Repository
+### 1️) Clone the Repository
 
 ```bash
-git clone https://github.com/SyedOwais312/floatchat-clean.git
+git clone https://github.com/SyedOwais312/floatchat.git
 cd floatchat-clean
 ```
 
-### 2️⃣ Install Dependencies
+### 2️)Install Dependencies
 
 #### Option A: Install Everything (Recommended)
 ```bash
@@ -150,7 +153,7 @@ pip install -r frontend/requirements.txt
 pip install -r ingestion/requirements.txt
 ```
 
-### 3️⃣ Database Setup
+### 3) Database Setup
 
 #### PostgreSQL Setup (Production)
 ```bash
@@ -165,14 +168,14 @@ GRANT ALL PRIVILEGES ON DATABASE floatchatai TO floatchat_user;
 #### SQLite Setup (Demo - No Setup Required)
 The project includes a `dummy.db` SQLite database for immediate testing.
 
-### 4️⃣ Environment Configuration
+### 4️) Environment Configuration
 
 Create a `.env` file in the root directory:
 
 ```bash
 # API Configuration
 GOOGLE_API_KEY=your_google_gemini_api_key
-QUERY_API=http://127.0.0.1:5000/query
+QUERY_API=http://127.0.0.1:5000/query(for local)
 
 # Database Configuration (if using PostgreSQL)
 DB_HOST=localhost
@@ -181,7 +184,7 @@ DB_USER=floatchat_user
 DB_PASSWORD=your_secure_password
 ```
 
-### 5️⃣ Start the Application
+### 5️) Start the Application
 
 #### Start Backend API
 ```bash
@@ -204,37 +207,37 @@ python main.py
 # This processes NetCDF files and populates the database
 ```
 
-### 6️⃣ Access the Application
+### 6️) Access the Application
 
-- **🌐 Frontend**: http://localhost:8501 - Interactive ocean data explorer
-- **🔌 API**: http://localhost:5000 - REST API endpoints
-- **📊 Map Visualization**: Navigate to Map page in the frontend
-- **📈 Time-Depth Analysis**: Navigate to Depth-Time Plots page
+- **Frontend**: http://localhost:8501 - Interactive ocean data explorer
+- **API**: http://localhost:5000 - REST API endpoints
+- **Map Visualization**: Navigate to Map page in the frontend
+- **Time-Depth Analysis**: Navigate to Depth-Time Plots page
 
 ---
 
-## 🎯 Key Features
+## Key Features
 
-### 💬 Natural Language Interface
+### Natural Language Interface
 Ask questions in plain English about ocean data:
 - *"Show salinity profiles near the equator"*
 - *"Find temperature data near Mumbai"*
 - *"Compare ocean data at lat=-43.037, long=130"*
 - *"What's the salinity trend in the Pacific Ocean?"*
 
-### 🧠 AI-Powered Search
+### AI-Powered Search
 - **Semantic Search**: Find relevant data using meaning, not just keywords
 - **Vector Embeddings**: 384-dimensional embeddings for precise matching
 - **Hybrid Scoring**: Combines semantic similarity with geographic proximity
 - **Natural Language Explanations**: AI-generated explanations using Google Gemini
 
-### 📊 Advanced Visualizations
+###  Advanced Visualizations
 - **Interactive Maps**: Geospatial visualization of ARGO float trajectories
 - **Depth-Time Heatmaps**: Visualize ocean parameters across time and depth
 - **Profile Comparisons**: Side-by-side analysis of different ocean variables
 - **Real-time Charts**: Dynamic Plotly visualizations with hover details
 
-### 🌍 Geospatial Intelligence
+### Geospatial Intelligence
 - **Automatic Geocoding**: Convert place names to coordinates
 - **Location-Aware Filtering**: Filter data by geographic proximity
 - **Distance Calculations**: Find nearest float data to any location
@@ -242,7 +245,7 @@ Ask questions in plain English about ocean data:
 
 ---
 
-## 📖 Usage Examples
+## Usage Examples
 
 ### Natural Language Queries
 
@@ -262,7 +265,7 @@ import requests
 import json
 
 # Query the API
-response = requests.post("http://localhost:5000/query", 
+response = requests.post(QUERY_API, 
                         json={"query": "Show salinity near the equator"})
 data = response.json()
 
@@ -283,11 +286,11 @@ for profile in data:
 ### Frontend Navigation
 
 The Streamlit frontend provides multiple pages:
-- **🏠 Home**: Welcome page with feature overview
-- **💬 FloatChat**: AI-powered chat interface
-- **🗺️ Map**: Interactive geospatial visualizations
-- **📊 Profile Comparison**: Side-by-side data analysis
-- **📈 Depth-Time Plots**: Time series and heatmap analysis
+- **Home**: Welcome page with feature overview
+- **FloatChat**: AI-powered chat interface
+- **🗺Map**: Interactive geospatial visualizations
+- **Profile Comparison**: Side-by-side data analysis
+- **Depth-Time Plots**: Time series and heatmap analysis
 
 ---
 
@@ -320,13 +323,13 @@ MODEL_NAME = 'all-MiniLM-L6-v2'  # Sentence transformer model
 
 ```python
 # frontend/chatbot_ui.py
-API_BASE_URL = "http://127.0.0.1:5000"  # Backend API URL
+API_BASE_URL = "http://127.0.0.1:5000"(for local) # Backend API URL
 TIMEOUT_SECONDS = 30                     # Request timeout
 ```
 
 ---
 
-## 📊 Data Format
+## Data Format
 
 ### Input Data
 - **NetCDF Files**: ARGO float data in standard NetCDF format
@@ -351,42 +354,7 @@ TIMEOUT_SECONDS = 30                     # Request timeout
 
 ---
 
-## 🚀 Deployment
-
-### Production Deployment
-
-1. **Environment Setup**
-```bash
-export GOOGLE_API_KEY=your_production_api_key
-export DB_HOST=your_production_host
-export DB_NAME=floatchatai_prod
-export DB_USER=your_prod_user
-export DB_PASSWORD=your_secure_password
-```
-
-2. **Backend Deployment**
-```bash
-# Using Gunicorn for production
-pip install gunicorn
-gunicorn -w 4 -b 0.0.0.0:5000 api.main:app
-```
-
-3. **Frontend Deployment**
-```bash
-# Deploy to Streamlit Cloud or similar
-streamlit run frontend/front.py --server.port 8501 --server.address 0.0.0.0
-```
-
-### Cloud Deployment Options
-- **Streamlit Cloud**: Easy frontend deployment
-- **Heroku**: Full-stack deployment
-- **AWS**: EC2 + RDS for scalable deployment
-- **Google Cloud**: Cloud Run + Cloud SQL
-- **Azure**: App Service + Azure Database
-
----
-
-## 🧪 Testing
+## Testing
 
 ### Run Demo Mode
 The application includes a demo mode that works without a database:
@@ -408,26 +376,6 @@ curl -X POST http://localhost:5000/query \
 
 ---
 
-## 🤝 Contributing
-
-We welcome contributions! Please follow these steps:
-
-1. **Fork the repository**
-2. **Create a feature branch**: `git checkout -b feature/amazing-feature`
-3. **Commit your changes**: `git commit -m 'Add amazing feature'`
-4. **Push to the branch**: `git push origin feature/amazing-feature`
-5. **Open a Pull Request**
-
-### Development Setup
-
-```bash
-# Install development dependencies
-pip install -r requirements.txt
-
-# Run the application in development mode
-cd api && python main.py &
-cd frontend && streamlit run front.py
-```
 
 ### Code Style
 - Follow PEP 8 guidelines
@@ -436,22 +384,7 @@ cd frontend && streamlit run front.py
 - Include type hints where possible
 
 ---
-
-## 📋 Roadmap
-
-### 🎯 Short Term
-- [ ] **Docker Support** - Containerized deployment
-- [ ] **Enhanced Visualizations** - 3D ocean data exploration
-- [ ] **Data Export** - CSV, NetCDF export functionality
-- [ ] **API Documentation** - Interactive API docs with Swagger
-
-### 🚀 Long Term
-- [ ] **Real-time Data Streaming** - Live ARGO data integration
-- [ ] **Machine Learning Models** - Predictive ocean analytics
-- [ ] **Multi-language Support** - Internationalization
-- [ ] **Mobile App** - iOS and Android applications
-- [ ] **Advanced Analytics** - Statistical analysis tools
-- [ ] **Collaboration Features** - Share and annotate findings
+ollaboration Features** - Share and annotate findings
 
 ---
 
@@ -469,26 +402,21 @@ cd frontend && streamlit run front.py
 
 ---
 
-## 📞 Support
+## Support
 
-- **🐛 Issues**: [GitHub Issues](https://github.com/SyedOwais312/floatchat-clean/issues)
-- **💬 Discussions**: [GitHub Discussions](https://github.com/SyedOwais312/floatchat-clean/discussions)
-- **📧 Email**: Contact the maintainer for direct support
+- **Issues**: [GitHub Issues](https://github.com/SyedOwais312/floatchat/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/SyedOwais312/floatchat/discussions)
+- **Email**: Contact the maintainer for direct support
 
 ---
 
-## 📄 License
+## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License - see the [LICENSE](https://github.com/Syedowais312/floatchat/blob/main/LICENSE) file for details.
 
 ---
 
 <div align="center">
-
-**Made with ❤️ for Ocean Science**
-
-[![GitHub stars](https://img.shields.io/github/stars/SyedOwais312/floatchat-clean?style=social)](https://github.com/SyedOwais312/floatchat-clean)
-[![GitHub forks](https://img.shields.io/github/forks/SyedOwais312/floatchat-clean?style=social)](https://github.com/SyedOwais312/floatchat-clean)
 
 *Star ⭐ this repository if you find it helpful!*
 
