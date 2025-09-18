@@ -16,10 +16,9 @@ DB_CONFIG = {
 DATA_DIR = "./data"
 
 
-model = SentenceTransformer('all-MiniLM-L6-v2')  # 384-d embeddings
-
+model = SentenceTransformer('all-MiniLM-L6-v2')  
 def get_embedding(text):
-    return model.encode(text).tolist()  # store as FLOAT8[]
+    return model.encode(text).tolist()  
 
 
 def ingest_nc_file(file_path, conn):
@@ -30,11 +29,9 @@ def ingest_nc_file(file_path, conn):
         lat = float(ds['LATITUDE'][prof].values)
         lon = float(ds['LONGITUDE'][prof].values)
 
-        # Create profile embedding
         desc = f"Ocean profile at lat {lat}, lon {lon}, date {juld.strftime('%Y-%m-%d')}"
         emb = get_embedding(desc)
 
-        # Insert profile
         with conn.cursor() as cur:
             cur.execute("""
                 INSERT INTO profiles (N_PROF, JULD, LATITUDE, LONGITUDE, embedding)
@@ -42,7 +39,6 @@ def ingest_nc_file(file_path, conn):
             """, (prof, juld, lat, lon, emb))
             profile_id = cur.fetchone()[0]
 
-        # Insert depth-level rows
         level_rows = [
             (profile_id, int(level), 
              float(ds['PRES'][prof, level].values),

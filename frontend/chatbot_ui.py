@@ -5,7 +5,25 @@ import json
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 import os
-from dotenv import load_dotenv 
+from dotenv import load_dotenv
+
+def is_ocean_data_query(user_input):
+    """Check if the user input is related to ocean data."""
+    keywords = [
+        "ocean", "salinity", "temperature", "depth", "profile", "float", "sea", "pressure",
+        "current", "marine", "water", "chlorophyll", "ph", "conductivity", "argo", "latitude", "longitude"
+    ]
+    user_input_lower = user_input.lower()
+    return any(word in user_input_lower for word in keywords)
+
+def fall_back_query(user_input):
+    """Respond to non-ocean-data queries."""
+    return (
+        "Hi! 👋 I'm FloatChat, your assistant for analyzing oceanographic float data. "
+        "It looks like your question isn't related to ocean data. "
+        "Please ask me about ocean profiles, salinity, temperature, or other oceanographic topics!"
+    )
+
 
 def query_backend(user_query):
     """Query the backend API at http://127.0.0.1:5000/query"""
@@ -256,10 +274,6 @@ def show_chatbot_ui():
         margin-right: auto 
     }
     
-<<<<<<< HEAD
-    
-=======
->>>>>>> b088ac7 (Chatbot updated)
     .thinking-container {
         background: rgba(255, 255, 255, 0.1) 
         color: white 
@@ -367,7 +381,6 @@ def show_chatbot_ui():
                         if chart:
                             st.plotly_chart(chart, use_container_width=True, config={'displayModeBar': False})
 
-    
     if user_input := st.chat_input("Ask me about ocean data..."):
 
         st.session_state.messages.append({"role": "user", "content": user_input})
@@ -375,39 +388,43 @@ def show_chatbot_ui():
             st.markdown(user_input)
 
         with st.chat_message("assistant"):
-            thinking_placeholder = show_thinking_animation()
-            
-            response_data = query_backend(user_input)
-            thinking_placeholder.empty()
+            if is_ocean_data_query(user_input):
+                thinking_placeholder = show_thinking_animation()
+                response_data = query_backend(user_input)
+                thinking_placeholder.empty()
 
-            if response_data and len(response_data) > 0:
-                data = response_data[0]  
-                
-                if "query_explain" in data:
-                    ai_response = data["query_explain"]
-                    st.markdown(ai_response)
+                if response_data and len(response_data) > 0:
+                    data = response_data[0]  
                     
-                    display_metadata(data)
-                    
-                    message_obj = {
-                        "role": "assistant", 
-                        "content": ai_response,
-                        "metadata": data 
-                    }
-                    
-                    if "depth_levels" in data and data["depth_levels"]:
-                        chart = create_ocean_data_charts(data["depth_levels"])
-                        if chart:
-                            st.plotly_chart(chart, use_container_width=True, config={'displayModeBar': False})
-                            message_obj["chart_data"] = data["depth_levels"]
-                    
-                    st.session_state.messages.append(message_obj)
+                    if "query_explain" in data:
+                        ai_response = data["query_explain"]
+                        st.markdown(ai_response)
+                        
+                        display_metadata(data)
+                        
+                        message_obj = {
+                            "role": "assistant", 
+                            "content": ai_response,
+                            "metadata": data 
+                        }
+                        
+                        if "depth_levels" in data and data["depth_levels"]:
+                            chart = create_ocean_data_charts(data["depth_levels"])
+                            if chart:
+                                st.plotly_chart(chart, use_container_width=True, config={'displayModeBar': False})
+                                message_obj["chart_data"] = data["depth_levels"]
+                        
+                        st.session_state.messages.append(message_obj)
+                    else:
+                        error_msg = "No explanation available in the response."
+                        st.markdown(error_msg)
+                        st.session_state.messages.append({"role": "assistant", "content": error_msg})
                 else:
-                    error_msg = "No explanation available in the response."
+                    error_msg = "🚫 Sorry, I couldn't retrieve ocean data right now. Please try again!"
                     st.markdown(error_msg)
                     st.session_state.messages.append({"role": "assistant", "content": error_msg})
             else:
-                error_msg = "🚫 Sorry, I couldn't retrieve ocean data right now. Please try again!"
+                error_msg = fall_back_query(user_input)
                 st.markdown(error_msg)
                 st.session_state.messages.append({"role": "assistant", "content": error_msg})
 

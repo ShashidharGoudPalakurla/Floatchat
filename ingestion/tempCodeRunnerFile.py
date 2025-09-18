@@ -5,9 +5,8 @@ import pandas as pd
 import psycopg2
 from psycopg2.extras import execute_batch
 
-# CONFIG
-DATA_DIR = "../data"  # folder with NetCDF files
-BULK_SIZE = 1000      # rows per batch insert
+DATA_DIR = "../data" 
+BULK_SIZE = 1000     
 DB_CONFIG = {
     "host": "localhost",
     "database": "floatchatai",
@@ -15,33 +14,27 @@ DB_CONFIG = {
     "password": "Owais@786"
 }
 
-# FILTERS (Optional, hackathon subset)
-LAT_RANGE = (-10, 30)  # Indian Ocean lat range
+LAT_RANGE = (-10, 30)
 TIME_START = "2023-01-01"
 TIME_END = "2023-06-30"
 
-# CONNECT TO DB
 def connect_db():
     return psycopg2.connect(**DB_CONFIG)
 
-# PREPROCESS FILE
 def preprocess_file(file_path):
     print(f"Processing {file_path}...")
     ds = xr.open_dataset(file_path, chunks={'time': 1000})
     df = ds.to_dataframe().reset_index()
     
-    # Filter subset
     if 'lat' in df.columns:
         df = df[df['lat'].between(LAT_RANGE[0], LAT_RANGE[1])]
     if 'time' in df.columns:
         df = df[(df['time'] >= pd.Timestamp(TIME_START)) & (df['time'] <= pd.Timestamp(TIME_END))]
     
-    # Keep only relevant columns
     columns = ['float_id', 'time', 'lat', 'lon', 'temp', 'salinity']
     df = df[[c for c in columns if c in df.columns]]
     return df
 
-# INSERT INTO POSTGRES
 def insert_to_postgres(df, conn):
     cur = conn.cursor()
     sql = """
@@ -53,7 +46,6 @@ def insert_to_postgres(df, conn):
     conn.commit()
     cur.close()
 
-# PROCESS ALL FILES
 def process_all():
     conn = connect_db()
     files = [f for f in os.listdir(DATA_DIR) if f.endswith(".nc")]
@@ -69,6 +61,5 @@ def process_all():
     conn.close()
     print("All files processed successfully!")
 
-# RUN SCRIPT
 if __name__ == "__main__":
     process_all()

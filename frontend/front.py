@@ -373,7 +373,7 @@ if st.session_state.current_page == "home":
         st.markdown("""
         <div class="feature-card">
             <div class="feature-title">
-                <div class="feature-icon">🤖</div>
+                <div class="feature-icon"></div>
                 FloatChat AI
             </div>
             <div class="feature-description">
@@ -387,7 +387,7 @@ if st.session_state.current_page == "home":
         st.markdown("""
         <div class="feature-card">
             <div class="feature-title">
-                <div class="feature-icon">🎯</div>
+                <div class="feature-icon"></div>
                 Smart Analytics
             </div>
             <div class="feature-description">
@@ -401,7 +401,7 @@ if st.session_state.current_page == "home":
         st.markdown("""
         <div class="feature-card">
             <div class="feature-title">
-                <div class="feature-icon">🗺️</div>
+                <div class="feature-icon"></div>
                 Interactive Mapping
             </div>
             <div class="feature-description">
@@ -415,7 +415,7 @@ if st.session_state.current_page == "home":
         st.markdown("""
         <div class="feature-card">
             <div class="feature-title">
-                <div class="feature-icon">⚡</div>
+                <div class="feature-icon"></div>
                 Real-time Data
             </div>
             <div class="feature-description">
@@ -429,7 +429,7 @@ if st.session_state.current_page == "home":
         st.markdown("""
         <div class="feature-card">
             <div class="feature-title">
-                <div class="feature-icon">📊</div>
+                <div class="feature-icon"></div>
                 Advanced Visualization
             </div>
             <div class="feature-description">
@@ -443,7 +443,7 @@ if st.session_state.current_page == "home":
         st.markdown("""
         <div class="feature-card">
             <div class="feature-title">
-                <div class="feature-icon">🔬</div>
+                <div class="feature-icon"></div>
                 Research Tools
             </div>
             <div class="feature-description">
