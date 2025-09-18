@@ -324,14 +324,3 @@ MODEL_NAME = 'all-MiniLM-L6-v2'  # Sentence transformer model
 
 ---
 
-##  Support
-
-- **Documentation**: [Wiki](https://github.com/SyedOwais312/floatchat/wiki)
-
----
-
-<div align="center">
-
-[Explore the Depths](http://localhost:8501) • [ Documentation](https://github.com/SyedOwais312/floatchat/wiki) • [Report Bug](https://github.com/SyedOwais312/floatchat/issues)
-
-</div>
