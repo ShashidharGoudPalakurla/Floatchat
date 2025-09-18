@@ -142,7 +142,7 @@ def show_thinking_animation():
         thinking_placeholder.markdown(
             f"""
             <div class="thinking-container">
-                <div class="thinking-text">🌊 Anton is analyzing ocean data{dots}</div>
+                <div class="thinking-text">Analyzing ocean data{dots}</div>
             </div>
             """, 
             unsafe_allow_html=True
@@ -155,9 +155,9 @@ def display_metadata(data):
     """Display metadata in a clean format"""
     metadata_html = f"""
     <div class="metadata-container">
-        <div class="metadata-item">📍 <strong>Location:</strong> {data.get('lat', 'N/A'):.3f}°N, {data.get('lon', 'N/A'):.3f}°E</div>
-        <div class="metadata-item">🕒 <strong>Time:</strong> {data.get('time', 'N/A')}</div>
-        <div class="metadata-item">🆔 <strong>Profile:</strong> {data.get('profile_id', 'N/A')}</div>
+        <div class="metadata-item"> <strong>Location:</strong> {data.get('lat', 'N/A'):.3f}°N, {data.get('lon', 'N/A'):.3f}°E</div>
+        <div class="metadata-item"> <strong>Time:</strong> {data.get('time', 'N/A')}</div>
+        <div class="metadata-item"> <strong>Profile:</strong> {data.get('profile_id', 'N/A')}</div>
     </div>
     """
     st.markdown(metadata_html, unsafe_allow_html=True)
@@ -200,6 +200,7 @@ def show_chatbot_ui():
         -webkit-text-fill-color: transparent;
         background-clip: text;
         margin-bottom: 0.5rem;
+    
     }
     
     .subtitle {
@@ -217,57 +218,57 @@ def show_chatbot_ui():
     
     /* Chat Messages - Fixed Alignment */
     .stChatMessage {
-        margin: 1.5rem 0 !important;
-        padding: 0 !important;
+        margin: 1.5rem 0 
+        padding: 0 
     }
     
     /* User Message - Right Aligned */
     .stChatMessage[data-testid="chat-message-user"] {
-        display: flex !important;
-        justify-content: flex-end !important;
-        align-items: flex-start !important;
+        display: flex 
+        justify-content: flex-end 
+        align-items: flex-start 
     }
     
     .stChatMessage[data-testid="chat-message-user"] > div {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
-        color: white !important;
-        padding: 1rem 1.5rem !important;
-        border-radius: 20px 20px 5px 20px !important;
-        max-width: 70% !important;
-        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3) !important;
-        margin-left: auto !important;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) 
+        color: white 
+        padding: 1rem 1.5rem 
+        border-radius: 20px 20px 5px 20px 
+        max-width: 70% 
+        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3) 
+        margin-left: auto 
     }
     
     /* Assistant Message - Left Aligned */
     .stChatMessage[data-testid="chat-message-assistant"] {
-        display: flex !important;
-        justify-content: flex-start !important;
-        align-items: flex-start !important;
+        display: flex 
+        justify-content: flex-start 
+        align-items: flex-start 
     }
     
     .stChatMessage[data-testid="chat-message-assistant"] > div {
-        background: rgba(255, 255, 255, 0.1) !important;
-        color: white !important;
-        padding: 1rem 1.5rem !important;
-        border-radius: 20px 20px 20px 5px !important;
-        max-width: 80% !important;
-        backdrop-filter: blur(10px) !important;
-        border: 1px solid rgba(255, 255, 255, 0.1) !important;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2) !important;
-        margin-right: auto !important;
+        background: rgba(255, 255, 255, 0.1) 
+        color: white 
+        padding: 1rem 1.5rem 
+        border-radius: 20px 20px 20px 5px 
+        max-width: 80% 
+        backdrop-filter: blur(10px) 
+        border: 1px solid rgba(255, 255, 255, 0.1) 
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2) 
+        margin-right: auto 
     }
     
-    /* Thinking Animation */
+    
     .thinking-container {
-        background: rgba(255, 255, 255, 0.1) !important;
-        color: white !important;
-        padding: 1rem 1.5rem !important;
-        border-radius: 20px 20px 20px 5px !important;
-        max-width: 80% !important;
-        backdrop-filter: blur(10px) !important;
-        border: 1px solid rgba(255, 255, 255, 0.1) !important;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2) !important;
-        margin-right: auto !important;
+        background: rgba(255, 255, 255, 0.1) 
+        color: white 
+        padding: 1rem 1.5rem 
+        border-radius: 20px 20px 20px 5px 
+        max-width: 80% 
+        backdrop-filter: blur(10px) 
+        border: 1px solid rgba(255, 255, 255, 0.1) 
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2) 
+        margin-right: auto 
     }
     
     .thinking-text {
@@ -277,34 +278,34 @@ def show_chatbot_ui():
     
     /* Chat Input */
     .stChatInput > div {
-        background: rgba(255, 255, 255, 0.1) !important;
-        backdrop-filter: blur(10px) !important;
-        border: 1px solid rgba(255, 255, 255, 0.2) !important;
-        border-radius: 25px !important;
-        max-width: 900px !important;
-        margin: 0 auto !important;
+        background: rgba(255, 255, 255, 0.1) 
+        backdrop-filter: blur(10px) 
+        border: 1px solid rgba(255, 255, 255, 0.2) 
+        border-radius: 25px 
+        max-width: 900px 
+        margin: 0 auto 
     }
     
     .stChatInput textarea {
-        background: transparent !important;
-        color: white !important;
-        border: none !important;
-        font-family: 'Inter', sans-serif !important;
-        padding: 1rem 1.5rem !important;
+        background: transparent 
+        color: white 
+        border: none 
+        font-family: 'Inter', sans-serif 
+        padding: 1rem 1.5rem 
     }
     
     .stChatInput textarea::placeholder {
-        color: rgba(255, 255, 255, 0.6) !important;
+        color: rgba(255, 255, 255, 0.6) 
     }
     
     .stChatInput button {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
-        border: none !important;
-        border-radius: 50% !important;
-        color: white !important;
-        width: 40px !important;
-        height: 40px !important;
-        margin: 0.5rem !important;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) 
+        border: none 
+        border-radius: 50% 
+        color: white 
+        width: 40px 
+        height: 40px 
+        margin: 0.5rem 
     }
     
     /* Metadata */
@@ -325,7 +326,7 @@ def show_chatbot_ui():
     
     /* Hide chat avatars */
     .stChatMessage img {
-        display: none !important;
+        display: none 
     }
     
     /* Responsive */
@@ -336,7 +337,7 @@ def show_chatbot_ui():
         
         .stChatMessage[data-testid="chat-message-user"] > div,
         .stChatMessage[data-testid="chat-message-assistant"] > div {
-            max-width: 90% !important;
+            max-width: 90% 
         }
     }
     </style>
@@ -345,8 +346,8 @@ def show_chatbot_ui():
     # Header
     st.markdown("""
     <div class="main-header">
-        <h1 class="main-title">🌊 FloatChat-Anton</h1>
-        <p class="subtitle">AI-powered ocean data analysis with beautiful visualizations</p>
+        <h1 class="main-title">FloatChat</h1>
+        <p class="subtitle">Need help analysing ocean data? I'm here!</p>
     </div>
     """, unsafe_allow_html=True)
 

@@ -52,7 +52,7 @@ div.stButton > button:first-child {
     background: transparent;
     color: #ffffff;            /* white text */
     font-weight: 600;
-    font-size: 16px;
+    font-size: 18px;
     padding: 8px 20px;
     border: none;
     border-bottom: 2px solid transparent;  /* invisible by default */
@@ -62,7 +62,7 @@ div.stButton > button:first-child {
 
 /* Hover effect - white underline */
 div.stButton > button:first-child:hover {
-    border-bottom: 2px solid #ffffff;  /* white underline */
+    border: 2px solid #ffffff; 
     color: #ffffff;                   /* keep text white */
 }
 
@@ -107,8 +107,8 @@ div.stButton > button:first-child:active {
 
     /* Feature Cards */
     .feature-card {
-        background: rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(15px);
+        background: rgba(0, 35, 102,0.4);
+        backdrop-filter: blur(200px);
         border-radius: 20px;
         padding: 2rem;
         margin-bottom: 2rem;
@@ -175,7 +175,7 @@ div.stButton > button:first-child:active {
 
     /* Statistics Cards */
     .stat-card {
-        background: rgba(255, 255, 255, 0.08);
+        background: rgba(0, 35, 102,0.9);
         backdrop-filter: blur(10px);
         border-radius: 12px;
         padding: 1rem;
@@ -360,10 +360,9 @@ if st.session_state.current_page == "home":
     st.markdown("""
     <div class="hero-section">
         <div class="hero-title">ARGO FloatChat</div>
-        <div class="hero-subtitle">Ocean Data Intelligence Platform</div>
+        <div class="hero-subtitle">Analyse Ocean data with ease</div>
         <div class="hero-description">
-            Explore ARGO float data with advanced analytics, interactive visualizations, 
-            and AI-powered insights. Discover the secrets of our ocean through intelligent data exploration.
+            Analyse ARGO Float data with simple commands, talk to our chatbot and get real time updates along with visulizations of the required profiles, everything at one place.
         </div>
     </div>
     """, unsafe_allow_html=True)
@@ -492,7 +491,7 @@ if st.session_state.current_page == "home":
         """, unsafe_allow_html=True)
 
 elif st.session_state.current_page == "chatbot":
-    st.markdown('<div class="page-title">FloatChat AI Assistant</div>', unsafe_allow_html=True)
+    st.markdown('<div class="</div>', unsafe_allow_html=True)
     show_chatbot_ui()
 
 elif st.session_state.current_page == "map":
