@@ -45,7 +45,6 @@ def query_backend(user_query):
             return None
             
     except requests.exceptions.ConnectionError:
-        # Remove fallback demo data, just return None
         time.sleep(2)
         return "currently i'm not trained on this data"
 
@@ -164,7 +163,7 @@ def display_metadata(data):
 
 def show_chatbot_ui():
     st.set_page_config(
-        page_title="FloatChat", 
+        page_title="FloatChat-Anton", 
         layout="wide",
         page_icon="🌊"
     )
@@ -333,7 +332,7 @@ def show_chatbot_ui():
 
     st.markdown("""
     <div class="main-header">
-        <h1 class="main-title">FloatChat</h1>
+        <h1 class="main-title">FloatChat-Anton</h1>
         <p class="subtitle">Need help analysing ocean data? I'm here!</p>
     </div>
     """, unsafe_allow_html=True)

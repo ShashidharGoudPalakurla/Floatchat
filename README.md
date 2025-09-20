@@ -421,3 +421,17 @@ This project is licensed under the MIT License - see the [LICENSE](https://githu
 *Star ⭐ this repository if you find it helpful!*
 
 </div>
+
+## Example Output
+
+Here’s what FloatChat looks like in action:
+
+<div align="center">
+
+![Chat Interface Example](frontend/output_chat_example.png)  
+*FloatChat answering oceanographic queries in natural language*
+
+![Depth-Time Plot Example](frontend/output_depth_time.png)  
+*Interactive depth-time visualization of ARGO float data*
+
+</div>
