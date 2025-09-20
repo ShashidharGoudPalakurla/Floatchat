@@ -45,33 +45,10 @@ def query_backend(user_query):
             return None
             
     except requests.exceptions.ConnectionError:
-        # Fallback demo data 
+        # Remove fallback demo data, just return None
         time.sleep(2)
-        return [{
-            "depth_levels": [
-                {"pres": 3.4, "salinity": 36.327, "temp": 26.355},
-                {"pres": 5.1, "salinity": 36.326, "temp": 26.356},
-                {"pres": 7.1, "salinity": 36.326, "temp": 26.357},
-                {"pres": 9.3, "salinity": 36.325, "temp": 26.356},
-                {"pres": 11.2, "salinity": 36.325, "temp": 26.355},
-                {"pres": 13.3, "salinity": 36.324, "temp": 26.355},
-                {"pres": 15.4, "salinity": 36.325, "temp": 26.354},
-                {"pres": 17.4, "salinity": 36.322, "temp": 26.344},
-                {"pres": 19.5, "salinity": 36.324, "temp": 26.332},
-                {"pres": 21.3, "salinity": 36.316, "temp": 26.329},
-                {"pres": 23.3, "salinity": 36.308, "temp": 26.300},
-                {"pres": 25.3, "salinity": 36.283, "temp": 26.100},
-                {"pres": 27.1, "salinity": 36.252, "temp": 25.719},
-                {"pres": 29.2, "salinity": 36.215, "temp": 25.200},
-                {"pres": 31.4, "salinity": 36.154, "temp": 23.792}
-            ],
-            "lat": 22.851356666666668,
-            "lon": 60.49283333333333,
-            "profile_id": 65,
-            "query_explain": f"Based on your query about '{user_query}', I found oceanographic data from the Indian Ocean. The surface temperature is around 26.3°C, but it gets cooler as you go deeper. Think of it like this: warm at the top, gradually getting cooler down below. 🌊🌡️ The salinity (saltiness) is also fairly consistent in the upper layers.",
-            "time": "2025-09-01 02:57:20"
-        }]
-        
+        return "currently i'm not trained on this data"
+
     except Exception as e:
         st.error(f"Error: {str(e)}")
         return None
