@@ -360,7 +360,7 @@ TIMEOUT_SECONDS = 30                     # Request timeout
 The application includes a demo mode that works without a database:
 
 1. Start the frontend: `streamlit run frontend/front.py`
-2. Ask any ocean-related question
+2. Ask any ocean-related question (if you dont specify the data and time it will take the current date and time)
 3. The system will provide demo data with realistic ocean profiles
 
 ### Test API Endpoints
