@@ -163,7 +163,7 @@ def display_metadata(data):
 
 def show_chatbot_ui():
     st.set_page_config(
-        page_title="FloatChat-Anton", 
+        page_title="FloatChat", 
         layout="wide",
         page_icon="🌊"
     )
@@ -332,7 +332,7 @@ def show_chatbot_ui():
 
     st.markdown("""
     <div class="main-header">
-        <h1 class="main-title">FloatChat-Anton</h1>
+        <h1 class="main-title">FloatChat</h1>
         <p class="subtitle">Need help analysing ocean data? I'm here!</p>
     </div>
     """, unsafe_allow_html=True)
