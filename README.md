@@ -94,7 +94,7 @@ floatchat-clean/
 ├── 📁 frontend/                # Streamlit user interface
 │   ├── chatbot_ui.py           # Main chat interface with visualizations
 │   ├── front.py                # Multi-page application with navigation
-│   │   ├── map_page.py             # Geospatial visualizations and maps
+│   ├── map_page.py             # Geospatial visualizations and maps
 │   ├── timedepthplot.py        # Depth-time analysis and heatmaps
 │   ├── dummy.py                # Demo data utilities
 │   ├── FloatChat.png           # Application logo
